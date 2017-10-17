@@ -1,0 +1,62 @@
+/*--------------------------------------------Breadcrumb Section----------------------*/
+
+.breadcrumb {
+    padding: 0px;
+    margin : 10px;
+    list-style: none;
+    background: gray;
+
+    li{
+        height: 30px;
+        background: #222;
+        line-height: 30px;
+        padding:0px 0px 0px 10px;
+        position: relative;
+        &:nth-child(n){
+            &:before {
+                padding: 0px;
+                content: "";
+                z-index: 1;
+                position: absolute;
+                right: -14px;
+                top: 0px;
+                width: 10px;
+                height: 100%;
+                background: transparent;
+                border-left: 12px solid #D9D9D9;
+                border-top: 15px solid transparent;
+                border-bottom: 15px solid transparent;
+            }
+        }
+        &:after{
+            content:'';
+            z-index: 2;
+            position: absolute;
+            right: -12px;
+            top: 0px;
+            width: 10px;
+            height: 100%;
+            background: transparent;
+            border-left: 12px solid #222;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            padding: 0px 5px 0px 12px;
+        }
+    }
+    li.active {
+        background: #444;
+        &:after{
+            content:'';
+            border-left: 12px solid #444;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+        }
+    }
+}
+
+/*--------------------------------------------Breadcrumb Section----------------------*/

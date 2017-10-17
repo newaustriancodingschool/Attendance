@@ -1,0 +1,6 @@
+.checkedIn{
+    color: green;
+}
+.checkedOut{
+    color: unset;
+}

@@ -1,0 +1,44 @@
+/*--------------------------------------------Title section----------------------*/
+.title-section{
+  background: $titleSectionColor;
+  color: white;
+  margin-top: $marginUpDown;
+  position: relative;
+  .arrowLeft, .arrowRight {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: -$arrowWidth;
+    left: 0px;
+    border-top: $arrowWidth solid transparent;
+    border-bottom: $arrowWidth solid transparent;
+    border-right: $arrowWidth solid $arrowColor;
+  }
+  .arrowRight {
+    right: 0px;
+    left: auto;
+    border-left: $arrowWidth solid $arrowColor;
+    border-right: 0px solid $arrowColor;
+  }
+  h3 {
+    font-weight: bold;
+    font-style: italic;
+    padding: $titlePadding;
+    padding-left: $arrowWidth;
+    margin: 0px;
+  }
+}
+.bodyOfSection{
+  background: white;
+  position: relative;
+  z-index: 0;
+  margin-bottom: $marginUpDown;
+  margin: 0px $arrowWidth;
+  padding: 10px 0px;
+  box-shadow: 0 10px 6px -6px #777;
+}
+.bgColor
+{
+  background-color: #EAEAEA;
+}
+/*--------------------------------------------Title section----------------------*/

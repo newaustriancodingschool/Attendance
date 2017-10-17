@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <nav class="navigation">
+      <div class="nav-brand-title">
+        <div class="content-center">
+          <div class="brand">
+            <a [routerLink]="['','admin']">
+                                  <img alt="Brand" src="../../../../assets/img/logo/logo.png">  
+                            </a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-items">
+        <div class="hamburger">
+          <a href="#">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </a>
+        </div>
+        <div class="welcome" *ngIf="isLoaded">
+          <span>Welcome&nbsp;,&nbsp;</span><span class="caption">Admin</span>
+        </div>
+        <div class="bg-brightness"></div>
+      </div>
+      <div class="fixed-menu">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a [routerLink]="['', 'admin']"><i class="fa fa-tachometer" aria-hidden="true"></i> Control Panel</a></li>
+          <li><a [routerLink]="['', 'admin', 'reports']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Reports</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</nav>
+
+<div class="clearfix"></div>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
