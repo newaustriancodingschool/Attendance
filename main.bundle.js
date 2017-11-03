@@ -539,7 +539,10 @@ var HumanizetimePipe = (function () {
     function HumanizetimePipe() {
     }
     HumanizetimePipe.prototype.transform = function (value, args) {
-        return window.moment.duration(value).humanize();
+        if (value) {
+            return window.moment.duration(value).humanize();
+        }
+        return 'Never';
     };
     return HumanizetimePipe;
 }());
@@ -1170,7 +1173,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/clientcheckin/clientcheckin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"panel panel-primary\">\n    <!-- Default panel contents -->\n    <div class=\"panel-heading\">Checker report</div>\n    <div class=\"panel-body\">\n        <table class=\"table table-hover\">\n            <thead>\n                <tr class=\"active\">\n                    <th>#</th>\n                    <th>Name</th>\n                    <th>Status</th>\n                    <th>Duration</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let checker of checkerSummary; let i = index\">\n                    <th>{{i+1}}</th>\n                    <th>{{checker.name}}</th>\n                    <th class=\"checkerStatus\"><div [class]=\"checker.checkedIn ? 'active': 'notActive'\"></div></th>\n                    <th>{{checker.lastDuration | humanizetime}}</th>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>"
+module.exports = "\n<div class=\"panel panel-primary\">\n    <!-- Default panel contents -->\n    <div class=\"panel-heading\">Checker report</div>\n    <div class=\"panel-body\">\n        <div class=\"alert alert-success\" role=\"alert\">System update every 10 seconds...</div>\n        <table class=\"table table-hover\">\n            <thead>\n                <tr class=\"active\">\n                    <th>#</th>\n                    <th>Name</th>\n                    <th>Status</th>\n                    <th>Duration</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let checker of checkerSummary; let i = index\">\n                    <th>{{i+1}}</th>\n                    <th>{{checker.name}}</th>\n                    <th class=\"checkerStatus\"><div [class]=\"checker.checkedIn ? 'active': 'notActive'\"></div></th>\n                    <th>{{checker.lastDuration | humanizetime}}</th>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -1201,6 +1204,10 @@ var ClientcheckinComponent = (function () {
         this.isLoaded = false;
     }
     ClientcheckinComponent.prototype.ngOnInit = function () {
+        this.checkerStatus();
+        this.iteration = setInterval(this.checkerStatus.bind(this), 10000);
+    };
+    ClientcheckinComponent.prototype.checkerStatus = function () {
         var _this = this;
         this.req.getCheckerInfo().subscribe(function (res) {
             var respond = res.json();
@@ -1219,6 +1226,9 @@ var ClientcheckinComponent = (function () {
                 message: "Somthing went wrong!"
             });
         });
+    };
+    ClientcheckinComponent.prototype.ngOnDestroy = function () {
+        clearInterval(this.iteration);
     };
     return ClientcheckinComponent;
 }());
@@ -1387,7 +1397,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-page\">\n  <div class=\"container-fluid\">\n    <div class=\"col-md-12 text-center\">\n\n      <!--Start Login section-->\n      <div class=\"login\">\n        <div class=\"panel panel-default\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Log In</h3>\n          </div>\n\n          <div class=\"panel-body\">\n            <div class=\"panel-body\">\n              <form [formGroup]=\"loginForm\" (ngSubmit)=\"loggin(loginForm.value, loginForm.valid)\" class=\"form-horizontal\" id=\"login\">\n\n                <div class=\"form-group\">\n                  <i class=\"fa fa-users fa-5x\"></i>\n\n                  <div class=\"clearfix margin-top\"></div>\n\n                  <label for=\"username\" class=\"col-sm-1 control-label\"><i class=\"fa fa-user fa-2x\"></i></label>\n\n                  <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" formControlName=\"username\" id=\"username\" placeholder=\"Username\">\n                    <small [hidden]=\"!submitted || loginForm.controls.username.valid\" style=\"color:red;\">Username required!</small>\n                  </div>\n                </div>\n\n                <div class=\"form-group\">\n                  <label for=\"Password\" class=\"col-sm-1 control-label\"><i class=\"fa fa-lock fa-2x\"></i></label>\n\n                  <div class=\"col-sm-10\">\n                    <input type=\"password\" class=\"form-control\" formControlName=\"password\" name=\"password\" id=\"Password\" placeholder=\"Password\">\n                    <small [hidden]=\"!submitted || loginForm.controls.password.valid\" style=\"color:red;\">Password required!</small>\n                  </div>\n                </div>\n\n                <div class=\"form-group\">\n                  <div class=\"btn-left col-sm-offset-1 col-sm-11\">\n                    <div class=\"checkbox\">\n                      <label>\n                        <input formControlName=\"checkbox\" type=\"checkbox\">&nbsp;Remember me\n                      </label>\n                    </div>\n                  </div>\n                </div>\n                \n                <div *ngIf=\"loading\" class=\"log-result col-lg-12\" style=\"border-radius: 50px; margin-bottom: 10px;background: #999; color: darkred\">\n                  <i class='fa fa-cog fa-2x fa-spin fa-fw'></i>\n                  <h3 style='color:darkred; display:inline-block'>Loading...</h3>\n                </div>\n\n                <div class=\"form-group\">\n                  <div class=\"btn-left col-sm-12\">\n                    <input [disabled]=\"!loginForm.valid\" type=\"submit\" class=\"login-btn btn btn-primary\" value=\"Log In\">\n                  </div>\n                </div>\n              </form>\n\n            </div>\n          </div>\n\n          <div class=\"panel-footer\"><i class=\"fa fa-warning\" style=\"color: red\"></i>&nbsp;&nbsp;You are not registerd\n            click <a [routerLink]=\"['', 'cp']\">here</a>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"clearfix\"></div>\n  </div>\n</div>"
+module.exports = "<div class=\"login-page\">\n  <div class=\"container-fluid\">\n    <div class=\"col-md-6 col-md-offset-3 text-center\">\n\n      <!--Start Login section-->\n      <div class=\"login\">\n        <div class=\"panel panel-default\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Log In</h3>\n          </div>\n\n          <div class=\"panel-body\">\n            <div class=\"panel-body\">\n              <form [formGroup]=\"loginForm\" (ngSubmit)=\"loggin(loginForm.value, loginForm.valid)\" class=\"form-horizontal\" id=\"login\">\n\n                <div class=\"form-group\">\n                  <i class=\"fa fa-users fa-5x\"></i>\n\n                  <div class=\"clearfix margin-top\"></div>\n\n                  <label for=\"username\" class=\"col-sm-1 control-label\"><i class=\"fa fa-user fa-2x\"></i></label>\n\n                  <div class=\"col-sm-10\">\n                    <input type=\"text\" class=\"form-control\" formControlName=\"username\" id=\"username\" placeholder=\"Username\">\n                    <small [hidden]=\"!submitted || loginForm.controls.username.valid\" style=\"color:red;\">Username required!</small>\n                  </div>\n                </div>\n\n                <div class=\"form-group\">\n                  <label for=\"Password\" class=\"col-sm-1 control-label\"><i class=\"fa fa-lock fa-2x\"></i></label>\n\n                  <div class=\"col-sm-10\">\n                    <input type=\"password\" class=\"form-control\" formControlName=\"password\" name=\"password\" id=\"Password\" placeholder=\"Password\">\n                    <small [hidden]=\"!submitted || loginForm.controls.password.valid\" style=\"color:red;\">Password required!</small>\n                  </div>\n                </div>\n\n                <div class=\"form-group\">\n                  <div class=\"btn-left col-sm-offset-1 col-sm-11\">\n                    <div class=\"checkbox\">\n                      <label>\n                        <input formControlName=\"checkbox\" type=\"checkbox\">&nbsp;Remember me\n                      </label>\n                    </div>\n                  </div>\n                </div>\n                \n                <div *ngIf=\"loading\" class=\"log-result col-lg-12\" style=\"border-radius: 50px; margin-bottom: 10px;background: #999; color: darkred\">\n                  <i class='fa fa-cog fa-2x fa-spin fa-fw'></i>\n                  <h3 style='color:darkred; display:inline-block'>Loading...</h3>\n                </div>\n\n                <div class=\"form-group\">\n                  <div class=\"btn-left col-sm-12\">\n                    <input [disabled]=\"!loginForm.valid\" type=\"submit\" class=\"login-btn btn btn-primary\" value=\"Log In\">\n                  </div>\n                </div>\n              </form>\n\n            </div>\n          </div>\n\n          <div class=\"panel-footer\"><i class=\"fa fa-warning\" style=\"color: red\"></i>&nbsp;&nbsp;Click <a [routerLink]=\"['']\">here</a> to return back home\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"clearfix\"></div>\n  </div>\n</div>"
 
 /***/ }),
 
