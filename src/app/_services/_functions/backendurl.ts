@@ -1,1 +1,1 @@
-export var URL = "http://rc-check-in-backend.herokuapp.com/";
+export var URL = "https://rc-check-in-backend.herokuapp.com/";
