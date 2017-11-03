@@ -6,10 +6,10 @@ export class RequestsService {
   constructor(private funs: FunctionsService) {  }
   // Admin http requests
   getPeople(userID=''){
-      return this.funs.makeRequest('people/'+userID, 'Get');
+      return this.funs.makeRequest('people/'+userID+'?size='+75, 'Get');
   }
   getCheckin(checkinID=''){
-    return this.funs.makeRequest('checkins/'+checkinID, 'Get');
+    return this.funs.makeRequest('checkins/'+checkinID+'?projection=log', 'Get');
   }
   updateStudentInfo(data){
     return this.funs.makeRequest('people/'+data.id, 'Put', data);

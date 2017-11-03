@@ -99,7 +99,7 @@ export class FunctionsService {
     if(typeof token == 'string'){
         return token;
       }else{
-        throw new Error('Invalid token!');
+        return false;
       }
   }
 

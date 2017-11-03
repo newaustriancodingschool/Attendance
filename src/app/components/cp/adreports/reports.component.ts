@@ -76,7 +76,7 @@ export class ReportsComponent implements OnInit {
             {"key":"id", "defaultValue":data.id},    
             {"key":"name", "defaultValue":data.name},
             {"key":"email", "defaultValue":data.email},
-            {"key":"slackHandle", "defaultValue":data.slackhandle},
+            {"key":"slackHandle", "defaultValue":data.slackHandle},
             {"key":"uid", "defaultValue":data.uid}
         ]);
   }
