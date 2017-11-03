@@ -1,0 +1,71 @@
+<div class="login-page">
+  <div class="container-fluid">
+    <div class="col-md-12 text-center">
+
+      <!--Start Login section-->
+      <div class="login">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Log In</h3>
+          </div>
+
+          <div class="panel-body">
+            <div class="panel-body">
+              <form [formGroup]="loginForm" (ngSubmit)="loggin(loginForm.value, loginForm.valid)" class="form-horizontal" id="login">
+
+                <div class="form-group">
+                  <i class="fa fa-users fa-5x"></i>
+
+                  <div class="clearfix margin-top"></div>
+
+                  <label for="username" class="col-sm-1 control-label"><i class="fa fa-user fa-2x"></i></label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username">
+                    <small [hidden]="!submitted || loginForm.controls.username.valid" style="color:red;">Username required!</small>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="Password" class="col-sm-1 control-label"><i class="fa fa-lock fa-2x"></i></label>
+
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" formControlName="password" name="password" id="Password" placeholder="Password">
+                    <small [hidden]="!submitted || loginForm.controls.password.valid" style="color:red;">Password required!</small>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="btn-left col-sm-offset-1 col-sm-11">
+                    <div class="checkbox">
+                      <label>
+                        <input formControlName="checkbox" type="checkbox">&nbsp;Remember me
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div *ngIf="loading" class="log-result col-lg-12" style="border-radius: 50px; margin-bottom: 10px;background: #999; color: darkred">
+                  <i class='fa fa-cog fa-2x fa-spin fa-fw'></i>
+                  <h3 style='color:darkred; display:inline-block'>Loading...</h3>
+                </div>
+
+                <div class="form-group">
+                  <div class="btn-left col-sm-12">
+                    <input [disabled]="!loginForm.valid" type="submit" class="login-btn btn btn-primary" value="Log In">
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+          <div class="panel-footer"><i class="fa fa-warning" style="color: red"></i>&nbsp;&nbsp;You are not registerd
+            click <a [routerLink]="['', 'cp']">here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

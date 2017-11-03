@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('nfccheck App', () => {
+describe('attendance App', () => {
   let page: AppPage;
 
   beforeEach(() => {

@@ -1,0 +1,24 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Checker report</div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+                <tr class="active">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let checker of checkerSummary; let i = index">
+                    <th>{{i+1}}</th>
+                    <th>{{checker.name}}</th>
+                    <th class="checkerStatus"><div [class]="checker.checkedIn ? 'active': 'notActive'"></div></th>
+                    <th>{{checker.lastDuration | humanizetime}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,38 +1,39 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { FunctionsService } from '../../_services/_functions/functions.service';
-import { RequestsService } from '../../_services/requests.service';
 import { AuthService } from '../../_services/auth.service';
-// import { GlobalDataService } from '../../_services/globaldata.service';
+import { FunctionsService } from '../../_services/_functions/functions.service';
 
-declare var $:any;
+declare var $: any;
 @Component({
-  selector: 'app-cp',
-  templateUrl: './cp.component.html',
-  styleUrls: ['./cp.component.css'],
-  providers: [ FunctionsService, RequestsService, AuthService ]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
+  providers: [ FunctionsService, AuthService ]
 })
-export class CpComponent implements OnInit {
+export class HomeComponent implements OnInit {
   navBar: any;
   burgger: any;
   bg: any;
+  isLoaded: boolean = true;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
-  isLoaded: boolean= true;
-  userData: any;
-  
-
-  constructor(private auth: AuthService, private req: RequestsService, private funs: FunctionsService, private router: Router) { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
     this.navBar = $('.navbar .navigation .hamburger a');
     this.burgger = $('.navbar .navigation .fixed-menu');
     this.bg = $('.navbar .bg-brightness');
+    this.isLoggedIn = this.auth.getCashedOf('token');
+    if(this.isLoggedIn){
+      this.isAdmin = true;
+    }
   }
   logout(e){
     this.auth.logout();
     return false;
   }
+
 
   @HostListener('document:click', ['$event'])
   onClick(e) {

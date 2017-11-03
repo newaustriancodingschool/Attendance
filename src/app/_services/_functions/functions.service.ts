@@ -70,9 +70,10 @@ export class FunctionsService {
     // let params: URLSearchParams = new URLSearchParams();
     // params.set('json', data);
     let header = new Headers(),opt;
-    // header.append("Authorization", "Basic "+this.getToken() );
+    var token = this.getToken();
+    if(token) header.append("Authorization", "Basic "+this.getToken());
     
-    if (type == "Post") {
+    if (type == "Post" || type == "Put") {
       header.append("Accept", "application/json");
       header.append("Content-Type", "application/json");
       opt = new RequestOptions({

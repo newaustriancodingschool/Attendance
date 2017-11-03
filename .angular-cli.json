@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "Attendance"
+    "name": "attendance"
   },
   "apps": [
     {
@@ -24,7 +24,6 @@
         "./assets/sass/bootstrap337/css/bootstrap.css",
         "./assets/sass/animate.css",
         "./assets/sass/style.css"
-
       ],
       "scripts": [
         "./assets/js/html5shiv.min.js",
@@ -66,6 +65,9 @@
   },
   "defaults": {
     "styleExt": "css",
+    "class": {
+      "spec": false
+    },
     "component": {}
   }
 }

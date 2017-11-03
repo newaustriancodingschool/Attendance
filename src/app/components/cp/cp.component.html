@@ -26,6 +26,7 @@
         <ul>
           <li><a [routerLink]="['', 'admin']"><i class="fa fa-tachometer" aria-hidden="true"></i> Control Panel</a></li>
           <li><a [routerLink]="['', 'admin', 'reports']"><i class="fa fa-check-square-o" aria-hidden="true"></i> Reports</a></li>
+          <li><a href="#logout" (click)="logout($event)"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a></li>
         </ul>
       </div>
     </nav>
