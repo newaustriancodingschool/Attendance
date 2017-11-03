@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FunctionsService } from '../../../_services/_functions/functions.service';
 import { RequestsService } from '../../../_services/requests.service';
 import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
@@ -9,12 +9,17 @@ import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
   styleUrls: ['./clientcheckin.component.css'],
   providers: [ FunctionsService, RequestsService ]
 })
-export class ClientcheckinComponent implements OnInit {
+export class ClientcheckinComponent implements OnInit,OnDestroy {
   isLoaded:boolean = false;
   checkerSummary:any;
+  iteration:any;
   constructor(private funs: FunctionsService, private req: RequestsService) { }
 
   ngOnInit() {
+    this.checkerStatus();
+    this.iteration = setInterval( this.checkerStatus.bind(this), 10000);
+  }
+  checkerStatus(){
     this.req.getCheckerInfo().subscribe(
       res=>{
         var respond = res.json();
@@ -33,8 +38,10 @@ export class ClientcheckinComponent implements OnInit {
             title: 'Errer',
             message: "Somthing went wrong!"
         });
-      }
-    )
+      });
+  }
+  ngOnDestroy(){
+    clearInterval(this.iteration);
   }
 
 }
