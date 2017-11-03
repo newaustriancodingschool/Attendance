@@ -48,11 +48,11 @@ export class LoginComponent implements OnInit {
           window.localStorage.clear();
           window.sessionStorage.clear();
           this.funs.notify({type: 'danger', 
-          icon: 'fa fa-exclamation-triangle',
-          title: 'Login Status',
-          message: "Invalid username and password. Please try again"});
-          this.loading = false;
-        });
+            icon: 'fa fa-exclamation-triangle',
+            title: 'Login Status',
+            message: "Invalid username and password. Please try again"});
+            this.loading = false;
+          });
     }
   }
 
