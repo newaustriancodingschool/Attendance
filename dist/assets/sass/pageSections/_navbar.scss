@@ -1,0 +1,242 @@
+$navBarBgColor: #736B73;
+$navBarHeight: 50px;
+$brandImgWidth: 150px;
+$brandImgheight: 40px;
+$navTitleBrandWidth: 25%;
+$distanceBetweenBrandCaption: 8px;
+$navigationColor: #FAFAFA;
+$navigationTextColor: #757575;
+$xs: 60%;
+$sm: 40%;
+$md: 30%;
+$lg: 20%;
+$slideMenuXs: (100%-$xs);
+$slideMenuSm: (100%-$sm);
+$slideMenuMd: (100%-$md);
+$slideMenuLg: (100%-$lg);
+
+.navbar{
+    border-color: lighten($navBarBgColor, 40%);
+    .container-fluid {
+        padding: 0px;
+        .navigation {
+            background: $navBarBgColor;
+            height: $navBarHeight;
+            width: 100%;
+            .nav-brand-title {
+                background: darken($navBarBgColor, 8%);
+                height: $navBarHeight;
+                width: $lg;
+                display: inline-block;
+                float: left;
+                .content-center {
+                    @include align(false, true); // Remove it to start align from left
+                    height: 100%;
+                    .brand {
+                        float: left;
+                        width: $brandImgWidth;
+                        overflow: hidden;
+                        margin-right: $distanceBetweenBrandCaption;
+                        @include prefixed(border-radius, 5px);
+                        @include align(true, false);
+                        a {
+                            display: inline-block;
+                            height: 100%;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                background: #fff;
+                                padding: 5px;
+                            }
+                        }
+                    }
+                    .caption {
+                        float: left;
+                        height: 100%;
+                        a {
+                            @include font-source-sans(22px, #fff, bold);
+                            @include ancher(none, white);
+                            @include align(true, false); // Align center the text only
+                        }
+                    }
+                }
+            }
+            .menu-items {
+                display: inline-block;
+                width: $slideMenuLg;
+                .hamburger {
+                    height: $navBarHeight;
+                    float: right;
+                    margin-right: 10px;
+                    a {
+                        @include ancher(none, white);
+                        @include align(true, false); // Align center the text only
+                        border: 1px solid #ddd;
+                        @include prefixed(border-radius, 5px);
+                        &:hover {
+                            background: darken($navBarBgColor, 10%);
+                        }
+                        &:checked {
+                            background: darken($navBarBgColor, 15%);
+                        }
+                        i {
+                            padding: 5px 8px;
+                            font-size: 25px;
+                        }
+                    }
+                }
+                .welcome {
+                    float: left;
+                    height: $navBarHeight;
+                    margin-left: 10px;
+                    line-height: 50px;
+                    color: white;
+                    span{
+                        font-size: 14px;
+                        font-weight: bold;
+                        &.caption{
+                            font-style: italic;
+                        }
+                    }
+                    div.triangle{
+                        line-height: 50px;
+                        display: inline-block;
+                        padding: 0px 10px;
+                        &:after{
+                            @include pseudo($display: inline-block, $pos: false, $content: '');
+                            @include css-triangle(white, right, 5px, false, false, false);
+                        }
+                    }
+                }
+            }
+            .fixed-menu {
+                background: $navigationColor;
+                overflow-y: auto;
+                @include pos(fixed, 0px, $slideMenuLg, 0px, 0px, 1032);
+                @include prefixed(transform, translate3d(-100%, 0, 0));
+                &.in {
+                    display: block;
+                    @include prefixed(transition, transform .3s ease-out);
+                    @include prefixed(transform, translate3d(0%, 0, 0));
+                }
+                &.out {
+                    display: block;
+                    @include prefixed(transition, transform .3s ease-in);
+                    @include prefixed(transform, translate3d(-100%, 0, 0));
+                }
+                h3 {
+                    padding: 16px 40px;
+                    color: $navigationTextColor;
+                    margin: 0px;
+                }
+                ul {
+                    padding: 0px;
+                    list-style: none;
+                    li{
+                            @include prefixed(transition, background .6s ease-in-out);
+                            background: $navigationColor;
+                        a{
+                            padding: 16px 40px;
+                            display: block;
+                            @include ancher($decoration: none, $color: $navigationTextColor);
+                            @include font-source-sans(14px, $navigationTextColor);
+                        }
+                        &:hover {
+                            @include prefixed(transition, background .1s ease-in-out);
+                            background: darken($navigationColor, 8%);
+                        }
+                    }
+                    .dropdown {
+                        cursor: pointer;
+                        .triangle {
+                            &:after {
+                                @include prefixed(transition, transform .2s ease-in-out);
+                                @include pseudo($display: inline-block, $pos: relative, $content: '');
+                                @include css-triangle($navigationTextColor, right, 5px, false, false, false);
+                                left: 5px;
+                                top: 1px;
+                            }
+                        }
+                        .collapseList {
+                            &:after {
+                                @include prefixed(transform, rotate(90deg));
+                            }
+                        }
+                    }
+                    .menu-list {
+                        display: none;
+                        li {
+                            a {
+                                padding-left: 60px;
+                            
+                            }
+                        }
+                    }
+                }
+            }
+            .bg-brightness {
+                @include pos(fixed, 0px, 0px, 0px, 0px, 1031);
+                background: black;
+                display: none;
+            }
+        }
+    }
+}
+// @include scrollStyle($width: 10px, $borderRadius: 5px, $background: rgba(35, 38, 78, 0.8), $inactive: rgba(35, 38, 78, 0.4));
+@include screen(xs) {
+    .navbar{
+        .container-fluid {
+            .navigation {
+                .nav-brand-title {
+                    width: $xs;
+                }
+                .menu-items {
+                    width: $slideMenuXs;
+                    .welcome{
+                        display: none;
+                    }
+                }
+                .fixed-menu {
+                    right: $slideMenuXs;
+                    .welcome{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+@include screen(sm) {
+    .navbar{
+        .container-fluid {
+            .navigation {
+                .nav-brand-title {
+                    width: $sm;
+                }
+                .menu-items {
+                    width: $slideMenuSm;
+                }
+                .fixed-menu {
+                    right: $slideMenuSm;
+                }
+            }
+        }
+    }
+}
+@include screen(md) {
+    .navbar{
+        .container-fluid {
+            .navigation {
+                .nav-brand-title {
+                    width: $md;
+                }
+                .menu-items {
+                    width: $slideMenuMd;
+                }
+                .fixed-menu {
+                    right: $slideMenuMd;
+                }
+            }
+        }
+    }
+}
