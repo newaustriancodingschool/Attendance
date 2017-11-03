@@ -22,7 +22,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return URL; });
-var URL = "http://rc-check-in-backend.herokuapp.com/";
+var URL = "https://rc-check-in-backend.herokuapp.com/";
 //# sourceMappingURL=backendurl.js.map
 
 /***/ }),
