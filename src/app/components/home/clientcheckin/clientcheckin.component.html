@@ -3,24 +3,16 @@
     <!-- Default panel contents -->
     <div class="panel-heading">Checker report</div>
     <div class="panel-body">
-        <div class="alert alert-success" role="alert">System update every 10 seconds...</div>
-        <table class="table table-hover">
+        <div class="alert alert-success" role="alert"><strong>Next system update in <span>{{updateCounter}}</span> seconds...</strong></div>
+        <table id="participant-check-in" class="table table-hover">
             <thead>
                 <tr class="active">
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Duration</th>
+                    <th data-field="#" data-sortable="true">#</th>
+                    <th data-field="Name" data-sortable="true">Name</th>
+                    <th data-field="Status" data-sortable="true">Status</th>
+                    <th data-field="Duration" data-sortable="true">Duration</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let checker of checkerSummary; let i = index">
-                    <th>{{i+1}}</th>
-                    <th>{{checker.name}}</th>
-                    <th class="checkerStatus"><div [class]="checker.checkedIn ? 'active': 'notActive'"></div></th>
-                    <th>{{checker.lastDuration | humanizetime}}</th>
-                </tr>
-            </tbody>
         </table>
     </div>
 </div>

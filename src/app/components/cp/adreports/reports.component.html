@@ -33,7 +33,7 @@
                                     <th>{{person.slackHandle}}</th>
                                     <th>{{person.uid}}</th>
                                     <th>
-                                        <button (click)="updatePersonInfo(person, i)" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#updateUSerInfo">
+                                        <button [disabled]="!fieldsAreReady" (click)="updatePersonInfo(person, i)" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#updateUSerInfo">
                                             Update
                                         </button>
                                     </th>
@@ -95,7 +95,21 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
-                <div class="modal-body">
+
+                <div class="modal-body" *ngIf="fieldsAreReady">
+                    <div class="form-group"  *ngFor="let item of formArray">
+                        <div *ngIf="item.key != 'id'">
+                            <label for="name" class="col-sm-2 control-label; let i = index">{{item.key}}</label>
+                            <div class="col-sm-10">
+                                <input [formControlName]="item.key" type="text" class="form-control" [id]="item.key" [placeholder]="item.key">
+                                <small [hidden]="updatePersonData.controls[item.key].valid">{{item.key}} required!</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
@@ -123,7 +137,10 @@
                             <small [hidden]="updatePersonData.controls.uid.valid">User card ID required!</small>
                         </div>
                     </div>
-                </div>
+                    <div id="addItem">
+
+                    </div>
+                </div> -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>

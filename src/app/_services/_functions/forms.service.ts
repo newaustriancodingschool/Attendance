@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Injectable()
 export class FormsService {
@@ -56,6 +57,15 @@ export class FormsService {
     }
     object.reset();
     return object;
+  }
+  addField(myForm:FormGroup, newName:string, object:any):any{
+    myForm.addControl(newName, new FormControl(object[0].defaultValue, object[0].validators) );
+    return myForm;
+  }
+  removeField(myForm:FormGroup ,fieldName:string){
+    if( !myForm.contains(fieldName) ) return myForm;
+      myForm.removeControl(fieldName);
+      return myForm;
   }
 
 }
