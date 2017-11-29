@@ -9,7 +9,7 @@ export class RequestsService {
       return this.funs.makeRequest('people/'+userID+'?size='+75, 'Get');
   }
   getCheckin(checkinID=''){
-    return this.funs.makeRequest('checkins/'+checkinID+'?projection=log', 'Get');
+    return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/'+checkinID+'?projection=log', 'Get');
   }
   updateStudentInfo(data){
     return this.funs.makeRequest('people/'+data.id, 'Put', data);

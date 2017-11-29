@@ -23,13 +23,15 @@
         "./assets/sass/font-awesome.min.css",
         "./assets/sass/bootstrap337/css/bootstrap.css",
         "./assets/sass/animate.css",
-        "./assets/sass/style.css"
+        "./assets/sass/style.css",
+        "./assets/sass/datatables.min.css"
       ],
       "scripts": [
         "./assets/js/html5shiv.min.js",
         "./assets/js/jquery-3.2.1.min.js",
-        "./assets/js/bootstrap337/js/bootstrap.min.js",
         "./assets/js/moment.min.js",
+        "./assets/js/bootstrap337/js/bootstrap.min.js",
+        "./assets/js/datatables.min.js",
         "./assets/js/bootstrap-notify.min.js"
       ],
       "environmentSource": "environments/environment.ts",

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { TolocaltimePipe } from '../../../_services/tolocaltime.pipe';
 import { CheckattendencePipe } from '../../../_services/checkattendence.pipe';
@@ -30,17 +29,22 @@ export class ReportsComponent implements OnInit {
   updatePersonData: FormGroup;
   updateRowID: number;
   checkinDate:any;
-  
+  fieldsAreReady: boolean = false
+  formArray: Array<any>;
   constructor(private fs: FormsService, private gs: GlobalDataService, private funs:FunctionsService , private ar: ActivatedRoute, private router: Router, private req:RequestsService) { }
   
   ngOnInit() {
-    this.updatePersonData = this.fs.group([
+    this.formArray = [
         {"key":"id", "defaultValue":"-1"},
         {"key":"name", "defaultValue":"", "validators":[ValidatorsService.required()] },
         {"key":"email", "defaultValue":"", "validators":[ValidatorsService.required()] },
         {"key":"slackHandle", "defaultValue":""},
         {"key":"uid", "defaultValue":"", "validators":[ValidatorsService.required()]}
-    ]);
+    ]
+    this.updatePersonData = this.fs.group(this.formArray);
+    // this.updatePersonData = this.fs.addField(this.updatePersonData, "anothor", [ {"defaultValue":"", "validators":[ValidatorsService.required()]} ] );
+    this.fieldsAreReady = true;
+      
     this.req.getPeople().subscribe(res => {
             this.peopleDate = res.json()._embedded.people;
             this.gs.pushDate('peopleData', this.peopleDate);
@@ -81,25 +85,23 @@ export class ReportsComponent implements OnInit {
         ]);
   }
   sendNewPersonInfo(values, isValid){
-      if(isValid){
+      if (isValid) {
           $('#updateUSerInfo').modal('hide');
           this.req.updateStudentInfo(values).subscribe(
-              (res)=>{
+              (res) => {
                   let newPersonData = res.json();
                   this.peopleDate[this.updateRowID] = newPersonData;
               },
-              (err)=>{
-                this.funs.notify({
-                    type: 'danger',
-                    icon: 'fa fa-exclamation-triangle',
-                    title: 'Errer',
-                    message: err.json().message
-                });
+              (err) => {
+                  this.funs.notify({
+                      type: 'danger',
+                      icon: 'fa fa-exclamation-triangle',
+                      title: 'Errer',
+                      message: err.json().message
+                  });
               });
       }
-
   }
-  
 }
 
 

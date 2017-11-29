@@ -55,7 +55,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## System Info
 
-This project generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
+This project generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.9.
 
 ## Further help
 
