@@ -15,8 +15,12 @@ export class RequestsService {
     return this.funs.makeRequest('people/'+data.id, 'Put', data);
   }
   // client http requests
-  getCheckerInfo(){
+  getCheckerInfo() {
     return this.funs.makeRequest('public/summary', 'Get');
   }
-  
+
+  // Overview end-point request
+  getOverviewInfo(date: string) {
+    return this.funs.makeRequest('overview/' + date, 'Get');
+  }
 }

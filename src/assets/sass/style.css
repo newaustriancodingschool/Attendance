@@ -45,7 +45,7 @@ body {
             height: 100%; }
             body .navbar .container-fluid .navigation .nav-brand-title .content-center .brand {
               float: left;
-              width: 150px;
+              width: 45px;
               overflow: hidden;
               margin-right: 8px;
               -webkit-border-radius: 5px;
@@ -66,7 +66,7 @@ body {
                 height: 100%; }
                 body .navbar .container-fluid .navigation .nav-brand-title .content-center .brand a img {
                   width: 100%;
-                  height: 45px;
+                  height: 100%;
                   background: #fff;
                   padding: 5px; }
             body .navbar .container-fluid .navigation .nav-brand-title .content-center .caption {

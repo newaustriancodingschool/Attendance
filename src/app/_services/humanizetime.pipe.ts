@@ -7,7 +7,7 @@ declare var window: any;
 export class HumanizetimePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if(value){
+    if (value && !args) {
       return window.moment.duration(value).humanize();
     }
     return 'Never';

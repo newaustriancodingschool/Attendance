@@ -29,10 +29,11 @@
       "scripts": [
         "./assets/js/html5shiv.min.js",
         "./assets/js/jquery-3.2.1.min.js",
-        "./assets/js/moment.min.js",
         "./assets/js/bootstrap337/js/bootstrap.min.js",
+        "./assets/js/bootstrap-notify.min.js",
         "./assets/js/datatables.min.js",
-        "./assets/js/bootstrap-notify.min.js"
+        "./assets/js/moment.min.js",
+        "./assets/js/bootstrap-datetimepicker.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

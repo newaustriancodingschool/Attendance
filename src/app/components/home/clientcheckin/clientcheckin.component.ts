@@ -100,8 +100,6 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
         arrObjects[id]['#'] = ++index;
       }
     }
-    // this.checkerSummary = arrObjects;
-    console.log(arrObjects);
     this.table.clear().draw();
     this.table.rows.add(arrObjects); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable

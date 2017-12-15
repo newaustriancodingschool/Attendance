@@ -1,0 +1,26 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Reports</div>
+    <div class="panel-body">
+        <app-datetimepicker [classid]="classid" (onDatePickerChange)="getRecords($event)"></app-datetimepicker>
+        <h4 *ngIf="isLoading" class="loading-status pull-right">Please wait a moment ...</h4>
+        <table class="table table-striped" *ngIf="isOverviewLoaded">
+            <thead>
+                <tr class="active">
+                    <th>Names</th>
+                    <th *ngFor="let day of overviewData.columns" [style.backgroundColor]=" !day.indexOf('w') ? '#cd302573' : '' ">{{day}}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let participent of overviewData.attendance">
+                    <td style="width: 100px;">{{participent.name}}</td>
+                    <td *ngFor="let period of participent.durations">
+                        {{period}}
+                    </td>
+                    <!-- <th [ngClass]="{'checkedIn': check.checkedIn, 'checkedOut': !check.checkedIn}">{{check.checkedIn | checkattendence}}</th> -->
+                    <!-- </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>
