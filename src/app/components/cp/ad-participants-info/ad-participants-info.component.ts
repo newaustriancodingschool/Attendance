@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import "rxjs/Rx";
 
+// Services
+import { FormGroup } from '@angular/forms';
 import { FunctionsService } from '../../../_services/_functions/functions.service';
 import { RequestsService } from '../../../_services/requests.service';
-// import { AuthService } from '../../../_services/auth.service';
 import { FormsService , ValidatorsService } from '../../../_services/_functions/forms';
 import { GlobalDataService } from '../../../_services/globaldata.service';
 
@@ -14,7 +13,7 @@ declare var $: any, window: any;
   selector: 'app-ad-participants-info',
   templateUrl: './ad-participants-info.component.html',
   styleUrls: ['./ad-participants-info.component.css'],
-  providers: [FunctionsService, RequestsService, FormsService]
+  providers: [ RequestsService, FormsService]
 })
 export class AdParticipantsInfoComponent implements OnInit {
 
@@ -26,6 +25,7 @@ export class AdParticipantsInfoComponent implements OnInit {
   fieldsAreReady: boolean = false
   formArray: Array<any>;
   constructor(
+    private AR: ActivatedRoute,
     private fs: FormsService,
     private gs: GlobalDataService,
     private funs:FunctionsService,
@@ -34,6 +34,7 @@ export class AdParticipantsInfoComponent implements OnInit {
     private req:RequestsService) { }
 
   ngOnInit() {
+    this.funs.pageTitle( this.AR ); // Change page tab title
     this.formArray = [
         {"key":"id", "defaultValue":"-1"},
         {"key":"name", "defaultValue":"", "validators":[ValidatorsService.required()] },

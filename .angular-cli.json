@@ -33,7 +33,9 @@
         "./assets/js/bootstrap-notify.min.js",
         "./assets/js/datatables.min.js",
         "./assets/js/moment.min.js",
-        "./assets/js/bootstrap-datetimepicker.min.js"
+        "./assets/js/bootstrap-datetimepicker.min.js",
+        "./assets/js/jspdf.min.js",
+        "./assets/js/jspdf.plugin.autotable.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

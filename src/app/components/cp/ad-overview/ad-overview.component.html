@@ -2,8 +2,24 @@
     <!-- Default panel contents -->
     <div class="panel-heading">Reports</div>
     <div class="panel-body">
-        <app-datetimepicker [classid]="classid" (onDatePickerChange)="getRecords($event)"></app-datetimepicker>
-        <h4 *ngIf="isLoading" class="loading-status pull-right">Please wait a moment ...</h4>
+        <div class="form-horizontal"> 
+            <div class="form-group">
+                <label for="date-picker" class="col-sm-1 control-label">Month: </label>
+                <div class="col-sm-2">
+                    <app-datetimepicker id="date-picker" [classid]="classid" (onDatePickerChange)="getRecords($event)"></app-datetimepicker>
+                </div>
+                <div class="col-sm-1">
+                    <span *ngIf="!isOverviewLoaded" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <button [disabled]="!isOverviewLoaded" (click)="savePDF($event)" class="btn btn-success">Doanload as PDF</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <br>
         <table class="table table-striped" *ngIf="isOverviewLoaded">
             <thead>
                 <tr class="active">

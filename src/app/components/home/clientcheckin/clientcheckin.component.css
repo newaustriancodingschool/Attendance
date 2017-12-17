@@ -1,15 +1,3 @@
-/* td.checkerStatus .notActive{
-    width: 15px;
-    height: 15px;
-    border: 1px solid black;
-    background: #333;
-    border-radius: 50%;
+table {
+    width: 100% !important;
 }
-td.checkerStatus .active{
-    width: 15px;
-    height: 15px;
-    border: 1px solid green;
-    background: greenyellow;
-    border-radius: 50%;
-}
- */

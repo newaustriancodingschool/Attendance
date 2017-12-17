@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
+// Services
 import { FormsService, ValidatorsService } from '../../_services/_functions/forms';
 import { FunctionsService } from '../../_services/_functions/functions.service';
 import { AuthService } from '../../_services/auth.service';
@@ -11,15 +12,23 @@ import { GlobalDataService } from '../../_services/globaldata.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [ FunctionsService, FormsService, AuthService ]
+  providers: [ FormsService, AuthService ]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
   loading: boolean= false;
-  constructor(private funs: FunctionsService, private fs: FormsService, private auth: AuthService, private router:Router, public gds: GlobalDataService) { }
+  constructor(
+    private AR: ActivatedRoute,
+    private router: Router,
+    private funs: FunctionsService,
+    private fs: FormsService,
+    private auth: AuthService,
+    public gds: GlobalDataService
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.funs.pageTitle( this.AR ); // Change page tab title
     this.auth.clearCash();
     this.loginForm = this.fs.group([
         {"key":"username", "defaultValue":"", "validators":[ValidatorsService.required()] },

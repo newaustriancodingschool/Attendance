@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
+// Services
 import { FunctionsService } from '../../../_services/_functions/functions.service';
 import { RequestsService } from '../../../_services/requests.service';
 import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
@@ -9,7 +11,7 @@ declare var $: any, window: any;
   selector: 'app-clientcheckin',
   templateUrl: './clientcheckin.component.html',
   styleUrls: ['./clientcheckin.component.css'],
-  providers: [ FunctionsService, RequestsService ]
+  providers: [ RequestsService ]
 })
 export class ClientcheckinComponent implements OnInit,OnDestroy {
   isLoaded:boolean = false;
@@ -17,11 +19,17 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
   iteration:any;
   updateCounter: number = 10;
   table: any;
-  constructor(private router: Router, private funs: FunctionsService, private req: RequestsService) { }
+  constructor(
+    private AR: ActivatedRoute,
+    private router: Router,
+    private funs: FunctionsService,
+    private req: RequestsService
+  ) { }
 
   ngOnInit() {
+    this.funs.pageTitle( this.AR ); // Change page tab title
     this.table = $('#participant-check-in').DataTable({
-        responsive: true,
+        responsive: false,
         pageLength: 50,
         order: [ [1, 'desc'], [2, 'asc'] ],
         columns: [
@@ -67,21 +75,13 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
     this.checkerStatus();
     this.startCounting();
   }
-  checkerStatus(){
+  checkerStatus() {
     this.req.getCheckerInfo().subscribe(
-      res=>{
-        var respond = res.json();
-        // respond.sort(function(x, y) {
-        //     // true values first
-        //     return (x.checkedIn === y.checkedIn)? 0 : x.checkedIn? -1 : 1;
-        //     // false values first
-        //     // return (x.checkedIn === y.checkedIn)? 0 : x.checkedIn? 1 : -1;
-        // });
+      res => {
+        const respond = res.json();
         this.DrawTable(respond);
-        
-        // $('#participant-check-in').DataTable();
       },
-      err=>{
+      err => {
         this.router.navigate(['login']);
         this.funs.notify({
             type: 'danger',

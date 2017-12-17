@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <nav class="navigation">
+        <div class="nav-brand-title">
+          <div class="content-center">
+            <div class="brand">
+              <a [routerLink]="['']">
+                <img alt="Brand" src="./assets/img/logo/logo.png">  
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="menu-items">
+          <div class="hamburger">
+            <a href="#">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="welcome">
+            <span>Welcome&nbsp;,&nbsp;</span><span class="caption">{{user}}</span>
+          </div>
+          <div class="bg-brightness"></div>
+        </div>
+        <div class="fixed-menu">
+          <h3>Navigation</h3>
+          <ul>
+            <!-- <li class="dropdown"><a href="#"><span class="triangle"><i class="fa fa-cog" aria-hidden="true"></i> Settings</span></a></li> -->
+            <!-- <ul class="menu-list"> -->
+              <div *ngFor="let cat of config; let l = last">
+                <li *ngIf="cat.isAdmin">
+                  <a *ngIf='l' href="#" (click)="logout($event)">
+                    <i class="{{cat.fontawesome}}" aria-hidden="true"></i> {{cat.caption}}
+                  </a>
+                  <a *ngIf='!l' [routerLink]="cat.routerLink.split(',')">
+                    <i class="{{cat.fontawesome}}" aria-hidden="true"></i> {{cat.caption}}
+                  </a>
+                </li>
+              </div>
+            <!-- </ul> -->
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </nav>

@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Http, Headers, RequestOptions, RequestMethod, Request, URLSearchParams  } from '@angular/http';
-import { URL } from './backendurl';
+import { environment } from '../../../environments/environment';
+
+// Production environment
+// import { environment } from '../../../environments/environment.prod';
 
 declare var $: any , window: any;
 @Injectable()
 export class FunctionsService {
-  public url = URL;
+  public url = environment.backendUrl;
 
-  constructor(private http: Http) {}
+  constructor(
+    private title: Title,
+    private http: Http
+  ) {}
   
   notify(data){
       $.notify({
@@ -64,8 +71,11 @@ export class FunctionsService {
     }else{
       throw new Error('Delay parameters must be ( Callback function, number of Delay in ms)');
     }
-  };
+  }
 
+  pageTitle(activeRoute: any) {
+    this.title.setTitle( activeRoute.snapshot.data['title'] );
+  }
   makeRequest(page = null, type = null, data = null) {
     // let params: URLSearchParams = new URLSearchParams();
     // params.set('json', data);
