@@ -1,0 +1,20 @@
+section#login-page {
+    background: url('../img/raspberry-pi.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    div#login-form {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        min-width: 300px;
+        margin-top: auto;
+        @include prefixed(transform, 'translateY(-50%)');
+        .brand-name {
+            width: 50%;
+            display: inline-block;
+            margin: auto;
+        }
+    }
+}
