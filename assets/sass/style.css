@@ -45,7 +45,7 @@ body {
             height: 100%; }
             body .navbar .container-fluid .navigation .nav-brand-title .content-center .brand {
               float: left;
-              width: 45px;
+              width: 120px;
               overflow: hidden;
               margin-right: 8px;
               -webkit-border-radius: 5px;
@@ -681,7 +681,31 @@ body {
   body ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(35, 38, 78, 0.4); }
 
-/*--------------------------------------------Login Page Section------------------------*/
+html, body {
+  height: 100%; }
+
+section#login-page {
+  background: url("../img/raspberry-pi.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%; }
+  section#login-page div#login-form {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    min-width: 300px;
+    margin-top: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%); }
+    section#login-page div#login-form .brand-name {
+      width: 50%;
+      display: inline-block;
+      margin: auto; }
+
 /*--------------------------------------------FrameWork------------------------*/
 /* Padding Section*/
 .padding-top {
