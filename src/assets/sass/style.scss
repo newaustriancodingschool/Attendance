@@ -23,8 +23,10 @@ body
         margin-bottom: 5px;
     }
 
-    table th:first-of-type, table td:first-of-type{
-        text-align: center;
+    table {
+        th:first-of-type, td:first-of-type {
+            text-align: center;
+        }
     }
     .units-wrapper{
         .unitsStyle{

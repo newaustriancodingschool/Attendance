@@ -64,6 +64,22 @@ export class FunctionsService {
       '</div>' 
     });
   }
+  showErrorNote(error: any) {
+    this.notify({
+        type: 'danger',
+        icon: 'fa fa-exclamation-triangle',
+        title: 'Error!',
+        message: error.message
+    });
+  }
+  showSuccessNote(message) {
+    this.notify({
+        type: 'success',
+        icon: 'fa fa-flag',
+        title: 'Login Status',
+        message: message
+    });
+  }
 
   delay(callback, time:number = 1000){
     if(typeof callback == 'function'){
@@ -94,7 +110,7 @@ export class FunctionsService {
         // search: params
       });
     }
-    if (type == "Get") {
+    if (type == "Get" || type == 'Delete') {
       header.append("Accept", "application/json");
       opt = new RequestOptions({
         headers: header,

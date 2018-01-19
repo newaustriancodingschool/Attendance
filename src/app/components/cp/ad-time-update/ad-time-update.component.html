@@ -1,0 +1,50 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Reports</div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+          <form [formGroup]="updateTimeForm" (ngSubmit)="updateTime(updateTimeForm.value, updateTimeForm.valid)" class="form-horizontal">
+            <div class="form-group">
+                <label for="date-picker" class="col-sm-1 control-label">For date: </label>
+                <div class="col-sm-2">
+                    <app-datetimepicker id="date-picker" [classid]="classid" [dateFormat]="dataPickerFormat" (onDatePickerChange)="getParticipants($event)"></app-datetimepicker>
+                </div>
+                <div class="col-sm-1">
+                    <span *ngIf="!isParticipantNamesLoaded" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="participants-names" class="col-sm-1 control-label">Participant name: </label>
+                <div class="col-sm-2">
+                    <select formControlName="id" id="participants-names">
+                      <option value=''>Select participant name</option>
+                      <option *ngFor="let name of peopleDate" value="{{name.id}}">{{name.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-10">
+                    <input type="submit" [disabled]="!isParticipantNamesLoaded && !updateTimeForm.valid " class="btn btn-success" value="Update Participant time">
+                </div>
+            </div>
+          </form>
+        </div>
+        <hr>
+        <br>
+        <!-- <table *ngIf="false" class="table table-striped" *ngIf="isOverviewLoaded">
+            <thead>
+                <tr class="active">
+                    <th>Names</th>
+                    <th *ngFor="let day of overviewData.columns" [style.backgroundColor]=" !day.indexOf('w') ? '#cd302573' : '' ">{{day}}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let participent of overviewData.attendance">
+                    <td style="width: 100px;">{{participent.name}}</td>
+                    <td *ngFor="let period of participent.durations" [innerHtml]="period | textBold">
+                    </td>
+            </tbody>
+        </table> -->
+    </div>
+</div>

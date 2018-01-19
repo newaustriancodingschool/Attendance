@@ -39,24 +39,23 @@ export class FormsService {
     if(typeof object != 'object'){
       throw new Error('Invalid object. form can\'t be update');
     }
-    if(Array.isArray(updatedForm)){
-      if(typeof updatedForm != null){
-        for(let field in updatedForm){        
-          object.controls[updatedForm[field]["key"]].patchValue(updatedForm[field]['defaultValue']);
-        }
+    if(typeof updatedForm != null){
+      for(let field in updatedForm){
+        if(!object.controls.hasOwnProperty(field) || updatedForm[field] == null ) continue;
+        object.controls[field].patchValue(updatedForm[field]);
       }
-    }else{
-      object.controls[updatedForm["key"]].patchValue(updatedForm['defaultValue']);
     }
-      
     return object;
   }
-  reset(object:any){    
-    if(typeof object != 'object'){
-      throw new Error('Invalid object. form faild to reset!');
+  reset(formGroup: FormGroup) {
+    if (typeof formGroup != 'object') {
+      throw new Error('Invalid object. form reset faild!');
     }
-    object.reset();
-    return object;
+    // tslint:disable-next-line:forin
+    for (let field in formGroup.controls) {
+      formGroup.controls[field].patchValue('');
+    }
+    return formGroup;
   }
   addField(myForm:FormGroup, newName:string, object:any):any{
     myForm.addControl(newName, new FormControl(object[0].defaultValue, object[0].validators) );

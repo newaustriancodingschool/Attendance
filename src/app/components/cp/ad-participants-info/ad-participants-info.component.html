@@ -23,7 +23,10 @@
                     <th>
                         <button [disabled]="!fieldsAreReady" (click)="updatePersonInfo(person, i)" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#updateUSerInfo">
                                 Update
-                            </button>
+                        </button>
+                        <button [disabled]="!fieldsAreReady" (click)="changePersonStatus(person, i)" type="button" class="{{person.disabled ? 'btn btn-info btn-lg' : 'btn btn-danger btn-lg' }}">
+                            {{person.disabled ? 'Enable': 'Disable'}}
+                        </button>
                     </th>
                 </tr>
             </tbody>

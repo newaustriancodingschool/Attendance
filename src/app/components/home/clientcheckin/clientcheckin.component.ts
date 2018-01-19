@@ -13,10 +13,10 @@ declare var $: any, window: any;
   styleUrls: ['./clientcheckin.component.css'],
   providers: [ RequestsService ]
 })
-export class ClientcheckinComponent implements OnInit,OnDestroy {
-  isLoaded:boolean = false;
-  checkerSummary:any;
-  iteration:any;
+export class ClientcheckinComponent implements OnInit, OnDestroy {
+  isLoaded: boolean = false;
+  checkerSummary: any;
+  iteration: any;
   updateCounter: number = 10;
   table: any;
   constructor(
@@ -35,45 +35,68 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
         columns: [
           { title: "#", data: "#" },
           { title: "Status", data: "checkedIn" },
-          { title: "Duration", data: "lastDuration" },
-          { title: "Name", data: "name" }
+          { title: "Last activity", data: "lastDuration" },
+          { title: "Name", data: "name" },
+          { title: "Attendance per week", data: "weekDuration" }
         ],
         columnDefs: [
           {
-            className: "checkerStatus",
+            className: 'checkerStatus',
             render: (data, type) => {
-                      if(type === 'display' || type === 'filter'){
+                      if (type === 'display' || type === 'filter'){
                         return (data) ? `<div class="active"
-                        style="width: 15px;
-                        height: 15px;
+                        style="width: 18px;
+                        height: 18px;
                         border: 1px solid green;
                         background: greenyellow;
-                        border-radius: 50%;"></div>` : `<div class="notActive" 
-                        style="width: 15px;
-                        height: 15px;
+                        border-radius: 50%;"></div>` : `<div class="notActive"
+                        style="width: 18px;
+                        height: 18px;
                         border: 1px solid black;
                         background: #333;
                         border-radius: 50%;"></div>`;
                       }
                       return data;
                   },
-                targets: 1
-              }, {
-                render: (data, type) => {
-                  if(type === 'display' || type === 'filter'){
-                    if (data) {
-                        return window.moment.duration(data).humanize();
-                    }
-                    return 'Never';
-                  }
-                  return data;
-                },
-                targets: 2
-              }]
+            targets: 1
+          },
+          {
+            render: (data, type) => {
+            if (type === 'display' || type === 'filter') {
+              if (data) {
+                  return window.moment.duration(data).humanize();
+                }
+                return 'Never';
+              }
+              return data;
+            },
+            targets: 2
+          },
+          {
+            render: (data, type) => {
+              data = Math.floor(window.moment.duration(data).asHours());
+              if (type === 'display' || type === 'filter') {
+                switch (true) {
+                  case ( data >= 40 ):
+                    return `<img width="20px" height="20px" src="./assets/img/emojis/Relieved_Emoji.png">`;
+                  case ( data >= 45 ):
+                    return `<img width="20px" height="20px" src="./assets/img/emojis/Smiling_Face_Emoji_with_Blushed_Cheeks.png">`;
+                  case ( data >= 48 ):
+                    return `<img width="20px" height="20px" src="./assets/img/emojis/Heart_Eyes_Emoji.png">`;
+                  case ( data >= 50 ):
+                    return `<img width="20px" height="20px" src="./assets/img/emojis/Hushed_Face_Emoji.png">`;
+                  default:
+                    return data + ' Hour(s)';
+                }
+              }
+              return data;
+            },
+            targets: 4
+        }]
 
     });
     this.checkerStatus();
-    this.startCounting();
+    // this.startCounting();
   }
   checkerStatus() {
     this.req.getCheckerInfo().subscribe(
@@ -91,11 +114,11 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
         });
       });
   }
-  DrawTable(arrObjects: Array<any>){
+  DrawTable(arrObjects: Array<any>) {
     // let newArray = [];
     let index = 0;
     for (let id in arrObjects) {
-      if(arrObjects[id]['lastDuration']){
+      if (arrObjects[id]['lastDuration']) {
         arrObjects[id]['lastDuration'] = window.moment.duration( arrObjects[id]['lastDuration'] ).asMilliseconds();
         arrObjects[id]['#'] = ++index;
       }
@@ -103,7 +126,7 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
     this.table.clear().draw();
     this.table.rows.add(arrObjects); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
-    
+
     // $('#participant-check-in').DataTable({
     //   data: arrObjects,
     //   columns: [
@@ -113,9 +136,9 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
     //   ]
     // });
   }
-  startCounting(){
-    this.iteration = setInterval( ()=>{
-      if(this.updateCounter == 0){
+  startCounting() {
+    this.iteration = setInterval( () => {
+      if (this.updateCounter === 0){
         this.updateCounter = 10;
         this.checkerStatus();
       }else{
@@ -123,7 +146,7 @@ export class ClientcheckinComponent implements OnInit,OnDestroy {
       }
     }, 1000);
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     clearInterval(this.iteration);
     this.table.destroy();
   }

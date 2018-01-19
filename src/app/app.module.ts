@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 // Framework components
 import { DatetimepickerComponent } from './_framework/datetimepicker/datetimepicker.component';
+import { NavbarComponent } from './_framework/navbar/navbar.component';
 
 // Global services to store data
 import { GlobalDataService } from './_services/globaldata.service';
@@ -16,6 +17,7 @@ import { FunctionsService } from './_services/_functions/functions.service';
 import { CheckattendencePipe } from './_services/checkattendence.pipe';
 import { HumanizetimePipe } from './_services/humanizetime.pipe';
 import { TolocaltimePipe } from './_services/tolocaltime.pipe';
+import { TextBoldPipe } from './_pipes/text-bold.pipe';
 
 // Main pages
 import { ClientcheckinComponent } from './components/home/clientcheckin/clientcheckin.component';
@@ -29,8 +31,7 @@ import { AdhomeComponent } from './components/cp/ad-home/adhome.component';
 import { AdParticipantsInfoComponent } from './components/cp/ad-participants-info/ad-participants-info.component';
 import { AdCheckinInfoComponent } from './components/cp/ad-checkin-info/ad-checkin-info.component';
 import { AdOverviewComponent } from './components/cp/ad-overview/ad-overview.component';
-import { NavbarComponent } from './_framework/navbar/navbar.component';
-
+import { AdTimeUpdateComponent } from './components/cp/ad-time-update/ad-time-update.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import { NavbarComponent } from './_framework/navbar/navbar.component';
     AdOverviewComponent,
     DatetimepickerComponent,
     ErrorpageComponent,
-    NavbarComponent
+    NavbarComponent,
+    TextBoldPipe,
+    AdTimeUpdateComponent
   ],
   imports: [
     APP_ROUTES_PROVIDER,

@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
     this.navBar = $('.navbar .navigation .hamburger a');
     this.burgger = $('.navbar .navigation .fixed-menu');
     this.bg = $('.navbar .bg-brightness');
-    console.log(this.config);
   }
 
   logout(e) {

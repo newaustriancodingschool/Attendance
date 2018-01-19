@@ -5,8 +5,12 @@ import { FunctionsService } from './_functions/functions.service';
 export class RequestsService {
   constructor(private funs: FunctionsService) {  }
   // Admin http requests
-  getPeople(userID=''){
+  getPeople(userID: string =''){
       return this.funs.makeRequest('people/'+userID+'?size='+75, 'Get');
+  }
+  // Admin http requests for deleting participant
+  changeParticipantStatus(uid: string) {
+      return this.funs.makeRequest(`people/${uid}/toggle`, 'Post');
   }
   getCheckin(checkinID=''){
     return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/'+checkinID+'?projection=log', 'Get');

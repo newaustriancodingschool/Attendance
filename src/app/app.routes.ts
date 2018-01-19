@@ -15,6 +15,7 @@ import { ErrorpageComponent } from './components/errorpage/errorpage.component';
 import { AdParticipantsInfoComponent } from './components/cp/ad-participants-info/ad-participants-info.component';
 import { AdCheckinInfoComponent } from './components/cp/ad-checkin-info/ad-checkin-info.component';
 import { AdOverviewComponent } from './components/cp/ad-overview/ad-overview.component';
+import { AdTimeUpdateComponent } from './components/cp/ad-time-update/ad-time-update.component';
 
 let myTitle:string = 'Attendance-';
 
@@ -26,6 +27,7 @@ const APP_ROUTES: Routes = [
   {path: 'admin', component: CpComponent, children: [
     {path: '', component: AdhomeComponent, data: { title: myTitle + 'Admin'}},
     {path: 'overview', component: AdOverviewComponent, data: { title: myTitle + 'Overview'} },
+    {path: 'timesupdate', component: AdTimeUpdateComponent, data: { title: myTitle + 'Time update'} },
     {path: 'checkin', component: AdCheckinInfoComponent, data: { title: myTitle + 'checkin'} },
     {path: 'participants', component: AdParticipantsInfoComponent, data: { title: myTitle + 'Participants'} }
   ]},

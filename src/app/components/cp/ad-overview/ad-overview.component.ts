@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Pipes
 import { TolocaltimePipe } from '../../../_services/tolocaltime.pipe';
 import { CheckattendencePipe } from '../../../_services/checkattendence.pipe';
+import { TextBoldPipe } from '../../../_pipes/text-bold.pipe';
 
 // Services
 import { FunctionsService } from '../../../_services/_functions/functions.service';
@@ -23,6 +24,7 @@ export class AdOverviewComponent implements OnInit {
   currentMonth: string = window.moment(new Date()).format('YYYY-MM');
   overviewData: any;
   classid: string = 'months';
+  dataPickerFormat: string = 'YYYY-MM';
   constructor(
     private AR: ActivatedRoute,
     public gs: GlobalDataService,
@@ -96,7 +98,7 @@ export class AdOverviewComponent implements OnInit {
         addPageContent: (data) => {
           pdf.text(
             "Attendence report for: " + this.overviewData.yearMonth,
-            data.settings.margin.left + 20, 22);
+            data.settings.margin.left + 27, 22);
           pdf.text(
             "Note: Default paper is A3 because of big table",
             data.settings.margin.left, 37);
@@ -105,6 +107,7 @@ export class AdOverviewComponent implements OnInit {
           pdf.internal.pageSize.height - 10);
         },
         createdCell: (cell, data) => {
+          cell.styles.halign  = 'right';
           if (data.column.dataKey.indexOf('w') > -1 ) {
              cell.styles.fillColor = [41, 128, 168];
              cell.styles.textColor = [255, 255, 255];
@@ -115,7 +118,7 @@ export class AdOverviewComponent implements OnInit {
     const img = new Image;
     img.src = './assets/img/logo/logo.png';
     img.onload = () => {
-      pdf.addImage(img, 'PNG', 11, 11, 18, 18);
+      pdf.addImage(img, 'PNG', 11, 11, 27, 20);
       pdf.save('attendance(RC)-' + this.overviewData.yearMonth + '.pdf');
     };
     return false;

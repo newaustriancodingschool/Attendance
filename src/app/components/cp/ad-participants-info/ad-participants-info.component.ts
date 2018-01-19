@@ -24,6 +24,7 @@ export class AdParticipantsInfoComponent implements OnInit {
   updateRowID: number;
   fieldsAreReady: boolean = false
   formArray: Array<any>;
+  isDisable: boolean = true;
   constructor(
     private AR: ActivatedRoute,
     private fs: FormsService,
@@ -36,14 +37,13 @@ export class AdParticipantsInfoComponent implements OnInit {
   ngOnInit() {
     this.funs.pageTitle( this.AR ); // Change page tab title
     this.formArray = [
-        {"key":"id", "defaultValue":"-1"},
-        {"key":"name", "defaultValue":"", "validators":[ValidatorsService.required()] },
-        {"key":"email", "defaultValue":"", "validators":[ValidatorsService.required()] },
-        {"key":"slackHandle", "defaultValue":""},
-        {"key":"uid", "defaultValue":"", "validators":[ValidatorsService.required()]}
-    ]
+        {key: 'id', defaultValue: '-1'},
+        {key: 'name', defaultValue: '', validators: [ValidatorsService.required()] },
+        {key: 'email', defaultValue: '', validators: [ValidatorsService.required()] },
+        {key: 'slackHandle', defaultValue: ''},
+        {key: 'uid', defaultValue: '', validators: [ValidatorsService.required()]}
+    ];
     this.updatePersonData = this.fs.group(this.formArray);
-    // this.updatePersonData = this.fs.addField(this.updatePersonData, "anothor", [ {"defaultValue":"", "validators":[ValidatorsService.required()]} ] );
     this.fieldsAreReady = true;
 
     this.req.getPeople().subscribe(res => {
@@ -61,7 +61,17 @@ export class AdParticipantsInfoComponent implements OnInit {
     });
   }
 
-
+  changePersonStatus(participantData, index) {
+    this.req.changeParticipantStatus(participantData.uid).subscribe(
+        res => {
+            this.funs.showSuccessNote('Participant status changed successfully!');
+            this.peopleDate[index] = res.json();
+        },
+        err => {
+            this.funs.showErrorNote(err.json());
+        }
+    );
+  }
   updatePersonInfo(data, index) {
       $('#myModalLabel').text('Update user info');
       this.updateRowID = index;

@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label for="date-picker" class="col-sm-1 control-label">Month: </label>
                 <div class="col-sm-2">
-                    <app-datetimepicker id="date-picker" [classid]="classid" (onDatePickerChange)="getRecords($event)"></app-datetimepicker>
+                    <app-datetimepicker id="date-picker" [classid]="classid" [dateFormat]="dataPickerFormat" (onDatePickerChange)="getRecords($event)"></app-datetimepicker>
                 </div>
                 <div class="col-sm-1">
                     <span *ngIf="!isOverviewLoaded" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
@@ -31,11 +31,8 @@
 
                 <tr *ngFor="let participent of overviewData.attendance">
                     <td style="width: 100px;">{{participent.name}}</td>
-                    <td *ngFor="let period of participent.durations">
-                        {{period}}
+                    <td *ngFor="let period of participent.durations" [innerHtml]="period | textBold">
                     </td>
-                    <!-- <th [ngClass]="{'checkedIn': check.checkedIn, 'checkedOut': !check.checkedIn}">{{check.checkedIn | checkattendence}}</th> -->
-                    <!-- </tr> -->
             </tbody>
         </table>
     </div>
