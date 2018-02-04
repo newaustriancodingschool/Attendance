@@ -10,7 +10,7 @@ export class RequestsService {
   }
   // Admin http requests for deleting participant
   changeParticipantStatus(uid: string) {
-      return this.funs.makeRequest(`people/${uid}/toggle`, 'Post');
+      return this.funs.makeRequest(`people/${uid}/toggle`, 'Put');
   }
   getCheckin(checkinID=''){
     return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/'+checkinID+'?projection=log', 'Get');
