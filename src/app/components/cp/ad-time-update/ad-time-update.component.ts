@@ -10,7 +10,10 @@ import { FunctionsService } from '../../../_services/_functions/functions.servic
 import { RequestsService } from '../../../_services/requests.service';
 import { FormsService, ValidatorsService } from '../../../_services/_functions/forms';
 
-declare var window: any;
+// Interface
+import { Participant, AdminCheckin } from '../../../_interfaces/interfaces.interface';
+
+declare var window: any, $: any;
 @Component({
   selector: 'app-ad-time-update',
   templateUrl: './ad-time-update.component.html',
@@ -18,38 +21,89 @@ declare var window: any;
   providers: [ RequestsService, FormsService ]
 })
 export class AdTimeUpdateComponent implements OnInit {
-  isParticipantNamesLoaded: boolean = false;
-  peopleDate: Array<any>;
-  classid: string = 'date-picker';
-  currentDate: string = window.moment(new Date()).format('YYYY-MM-DD');
-  dataPickerFormat: string = 'YYYY-MM-DD';
+  // Show data picker in a format of 'YYYY-MM';
+  dataPickerFormat: string = 'YYYY-MM';
+  // Participant model
+  peopleDate: Array<Participant>;
+  // Related to the time
+  participantTimes: Array<AdminCheckin>;
+  isLoading: boolean = false;
+
+  // current date
+  currentDate: string = window.moment(new Date()).format('YYYY-MM');
+  
+  // Update time form group
   updateTimeForm: FormGroup;
+
+  // New time picker format
+  newPickerFormat: string = 'YYYY-MM-DD HH:mm';
+  newUpdateForm = {
+    newPickeTime: window.moment(new Date()).utc().format(),
+    participantAuto: false,
+    participantId: null,
+    participantIndex: null
+  };
+  isUpdating: boolean = false;
+
   constructor(private fs: FormsService, private req: RequestsService, private funs: FunctionsService) { }
 
   ngOnInit() {
     this.updateTimeForm = this.fs.group([
-      {key: 'id', defaultValue: '-1', validators: [ValidatorsService.required()]},
+      {key: 'uid', defaultValue: '', validators: [ValidatorsService.required()]},
       {key: 'date', defaultValue: this.currentDate, validators: [ValidatorsService.required()] }
     ]);
     this.req.getPeople('').subscribe(
       res => {
-          // this.funs.showSuccessNote('Participant status changed successfully!');
-          this.isParticipantNamesLoaded = true;
+          this.isLoading = true;
           this.peopleDate = res.json()._embedded.people;
-          console.log(this.peopleDate);
       },
       err => {
           this.funs.showErrorNote(err.json());
       });
   }
-  getParticipants(e) {
-    this.updateTimeForm = this.fs.update(this.updateTimeForm, {date: e.format('YYYY-MM-DD')});
+
+  getDatapickerDate(e) {
+    this.updateTimeForm = this.fs.update(this.updateTimeForm, [{key: 'date', defaultValue: e.format('YYYY-MM')}]);
   }
 
-  updateTime(data, isValid) {
-    console.log(data);
+  // Bring participants time of a specific month.
+  bringParticipantTime(data, isValid) {
     if (isValid) {
-
+      this.isLoading = false;
+      this.req.getParticipantTimes(data.uid, data.date).subscribe(
+        res => {
+            this.participantTimes = res.json();
+            this.isLoading = true;
+        },
+        err => {
+            this.funs.showErrorNote(err.json());
+        });
     }
+  }
+
+  pickedNewDate(e: any) {
+    this.newUpdateForm.newPickeTime = e.format();
+  }
+  openModal(participantInfo: AdminCheckin, index: number) {
+    this.newUpdateForm.participantAuto = participantInfo.auto;
+    this.newUpdateForm.participantId = participantInfo.id;
+    this.newUpdateForm.participantIndex = index;
+  }
+  updateTime() {
+    let payload = {
+      time: window.moment(this.newUpdateForm.newPickeTime).utc().format(),
+      auto: this.newUpdateForm.participantAuto
+    };
+    this.isUpdating = true;
+    this.req.updateParticipantTime(this.newUpdateForm.participantId, payload). subscribe(
+      res => {
+          this.isUpdating = false;
+          this.funs.showSuccessNote('Participant check in time has been successfully updated!');
+          this.participantTimes[this.newUpdateForm.participantIndex] = res.json();
+          $('#callModal').modal('hide');
+      },
+      err => {
+          this.funs.showErrorNote(err.json());
+      });
   }
 }

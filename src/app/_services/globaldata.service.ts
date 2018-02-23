@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalDataService {
   private global:any = {};
+  public timer: any;
   public objects_of_ids:any = {
     customer_id: null,
     site_id: null

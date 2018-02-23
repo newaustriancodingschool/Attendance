@@ -99,7 +99,7 @@ export class FunctionsService {
     var token = this.getToken();
     if(token) header.append("Authorization", "Basic "+this.getToken());
     
-    if (type == "Post" || type == "Put") {
+    if (type == "Post" || type == "Put" || type == "Patch") {
       header.append("Accept", "application/json");
       header.append("Content-Type", "application/json");
       opt = new RequestOptions({

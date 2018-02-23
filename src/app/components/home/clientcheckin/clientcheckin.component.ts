@@ -17,11 +17,12 @@ declare var $: any, window: any;
   providers: [ RequestsService ]
 })
 export class ClientcheckinComponent implements OnInit, OnDestroy {
-  isLoaded: Boolean = false;
+  // isLoaded: Boolean = false;
   checkerSummary: any;
   iteration: any;
   updateCounter: number = 10;
   table: any;
+  isRefreshing: boolean = false;
   constructor(
     private AR: ActivatedRoute,
     private router: Router,
@@ -36,7 +37,6 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
         pageLength: 50,
         order: [ [1, 'desc'], [2, 'asc'] ],
         columns: [
-          { title: '#', data: '#' },
           { title: 'Status', data: 'checkedIn' },
           { title: 'Last activity', data: 'lastDuration' },
           { title: 'Name', data: 'name' },
@@ -50,18 +50,20 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
                         return (data) ? `<div class="active"
                         style="width: 18px;
                         height: 18px;
+                        margin: auto;
                         border: 1px solid green;
                         background: greenyellow;
                         border-radius: 50%;"></div>` : `<div class="notActive"
                         style="width: 18px;
                         height: 18px;
+                        margin: auto;
                         border: 1px solid black;
                         background: #333;
                         border-radius: 50%;"></div>`;
                       }
                       return data;
                   },
-            targets: 1
+            targets: 0
           },
           {
             render: (data, type) => {
@@ -73,7 +75,7 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
               }
               return data;
             },
-            targets: 2
+            targets: 1
           },
           {
             render: (data, type) => {
@@ -94,20 +96,22 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
               }
               return data;
             },
-            targets: 4
+            targets: 3
         }]
 
     });
     this.checkerStatus();
-    this.startCounting();
+    // this.Update();
   }
   ngOnDestroy() {
-    clearInterval(this.iteration);
+    // clearInterval(this.iteration);
     this.table.destroy();
   }
   checkerStatus() {
+    this.isRefreshing = true;
     this.req.getCheckerInfo().subscribe(
       res => {
+        this.isRefreshing = false;
         const respond: Array<ClientCheckin> = res.json();
         this.DrawTable(respond);
       },
@@ -122,27 +126,25 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
       });
   }
   DrawTable(arrObjects: Array<ClientCheckin>) {
-    let index = 0;
     // tslint:disable-next-line:prefer-const
     for (let id in arrObjects) {
       if (arrObjects[id]['lastDuration']) {
         arrObjects[id]['lastDuration'] = window.moment.duration( arrObjects[id]['lastDuration'] ).asMilliseconds();
-        arrObjects[id]['#'] = ++index;
       }
     }
     this.table.clear().draw();
     this.table.rows.add(arrObjects); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
   }
-  startCounting() {
-    this.iteration = setInterval( () => {
-      if (this.updateCounter === 0) {
-        this.updateCounter = 10;
+  Update() {
+    // this.iteration = setInterval( () => {
+    //   if (this.updateCounter === 0) {
+    //     this.updateCounter = 10;
         this.checkerStatus();
-      } else {
-        this.updateCounter--;
-      }
-    }, 1000);
+    //   } else {
+    //     this.updateCounter--;
+    //   }
+    // }, 1000);
   }
 
 }
