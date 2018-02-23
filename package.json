@@ -7,6 +7,8 @@
     "start": "ng serve",
     "server": "ng server",
     "build": "ng build",
+    "build-prod": "ng build --prod --base-href https://refugeescodeat.github.io/Attendance/",
+    "deploy": "angular-cli-ghpages",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
