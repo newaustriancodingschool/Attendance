@@ -4,6 +4,7 @@
 /tmp
 /out-tsc
 /Attendance
+/dist
 
 # dependencies
 /node_modules
@@ -16,6 +17,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+*.iml
 
 # IDE - VSCode
 .vscode/*

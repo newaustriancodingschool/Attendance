@@ -11,11 +11,14 @@ export class RequestsService {
   // Admin http requests for deleting participant
   changeParticipantStatus(uid: string) {
       return this.funs.makeRequest(`people/${uid}/toggle`, 'Put');
+<<<<<<< HEAD
   }
 
   // For Participant time update.
   getParticipantTimes(uid: string, date: string) {
     return this.funs.makeRequest(`checks/${uid}/${date}`, 'Get');
+=======
+>>>>>>> 996e5ad61bc8760405315df1509e68e2418dc848
   }
   getCheckin(checkinID=''){
     return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/' + checkinID + '?projection=log', 'Get');
