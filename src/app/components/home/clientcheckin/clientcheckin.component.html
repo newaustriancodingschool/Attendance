@@ -3,7 +3,13 @@
     <!-- Default panel contents -->
     <div class="panel-heading">Checker report</div>
     <div class="panel-body">
-        <div class="alert alert-success" role="alert"><strong>Next system update in <span>{{updateCounter}}</span> seconds...</strong></div>
+        <div class="row">
+            <div class="text-center col-xs-12">
+                <button [disabled]="isRefreshing" type="button" class="btn btn-success refresh" (click)="Update()">Refresh results</button>
+                <span *ngIf="isRefreshing" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
+            </div>
+        </div>
+        <!-- <div class="alert alert-success" role="alert"><strong>Next system update in <span>{{updateCounter}}</span> seconds...</strong></div> -->
         <div class="row">
             <div class="col-xs-12">
                 <table id="participant-check-in" class="table table-hover">

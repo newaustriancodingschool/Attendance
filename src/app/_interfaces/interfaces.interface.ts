@@ -1,3 +1,3 @@
 export { ClientCheckin } from './clientcheckin.interface';
-export { Participant } from './participants.interface';
-export { Admincheckin } from './admincheckin.interface';
+export { Participant } from './participant.interface';
+export { AdminCheckin } from './admincheckin.interface';

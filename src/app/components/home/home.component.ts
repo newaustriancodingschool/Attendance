@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { AuthService } from '../../_services/auth.service';
 import { FunctionsService } from '../../_services/_functions/functions.service';
+
+import { GlobalDataService } from '../../_services/globaldata.service';
 
 declare var $: any;
 @Component({
@@ -17,7 +19,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, public gs: GlobalDataService) { }
 
   ngOnInit() {
     this.config = [

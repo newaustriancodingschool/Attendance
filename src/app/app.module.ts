@@ -29,7 +29,7 @@ import { ErrorpageComponent } from './components/errorpage/errorpage.component';
 import { CpComponent } from './components/cp/cp.component';
 import { AdhomeComponent } from './components/cp/ad-home/adhome.component';
 import { AdParticipantsInfoComponent } from './components/cp/ad-participants-info/ad-participants-info.component';
-import { AdCheckinInfoComponent } from './components/cp/ad-checkin-info/ad-checkin-info.component';
+// import { AdCheckinInfoComponent } from './components/cp/ad-checkin-info/ad-checkin-info.component';
 import { AdOverviewComponent } from './components/cp/ad-overview/ad-overview.component';
 import { AdTimeUpdateComponent } from './components/cp/ad-time-update/ad-time-update.component';
 
@@ -45,7 +45,6 @@ import { AdTimeUpdateComponent } from './components/cp/ad-time-update/ad-time-up
     HomeComponent,
     ClientcheckinComponent,
     AdParticipantsInfoComponent,
-    AdCheckinInfoComponent,
     AdOverviewComponent,
     DatetimepickerComponent,
     ErrorpageComponent,

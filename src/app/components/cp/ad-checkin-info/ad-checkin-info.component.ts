@@ -14,7 +14,7 @@ import { CheckattendencePipe } from '../../../_services/checkattendence.pipe';
 import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
 // import "rxjs/Rx";
 
-import { Admincheckin } from '../../../_interfaces/admincheckin.interface';
+import { AdminCheckin } from '../../../_interfaces/admincheckin.interface';
 
 declare var $: any;
 @Component({
@@ -25,7 +25,7 @@ declare var $: any;
 })
 export class AdCheckinInfoComponent implements OnInit {
   checkInReportLoaded:boolean = false;
-  checkinsData: Array<Admincheckin>;
+  checkinsData: Array<AdminCheckin>;
 
   checkinDate:any;
   fieldsAreReady: boolean = false

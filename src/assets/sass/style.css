@@ -653,6 +653,8 @@ body {
       background: #DDD; }
     body .units-wrapper .unitsStyle .caption-footer {
       bottom: 0px; }
+  body .loading-status i {
+    vertical-align: middle; }
   body ::-webkit-scrollbar {
     width: 10px; }
   body ::-webkit-scrollbar-track {

@@ -12,11 +12,16 @@ export class RequestsService {
   changeParticipantStatus(uid: string) {
       return this.funs.makeRequest(`people/${uid}/toggle`, 'Put');
   }
+
+  // For Participant time update.
+  getParticipantTimes(uid: string, date: string) {
+    return this.funs.makeRequest(`checks/${uid}/${date}`, 'Get');
+  }
   getCheckin(checkinID=''){
-    return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/'+checkinID+'?projection=log', 'Get');
+    return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/' + checkinID + '?projection=log', 'Get');
   }
   updateStudentInfo(data){
-    return this.funs.makeRequest('people/'+data.id, 'Put', data);
+    return this.funs.makeRequest('people/' + data.id, 'Put', data);
   }
   deleteParticipant(uid: string) {
     return this.funs.makeRequest('people/' + uid + '/delete', 'Delete');
@@ -29,5 +34,9 @@ export class RequestsService {
   // Overview end-point request
   getOverviewInfo(date: string) {
     return this.funs.makeRequest('overview/' + date, 'Get');
+  }
+  // Update Participant Time
+  updateParticipantTime(id: number , UpdatecheckinData: any) {
+    return this.funs.makeRequest('checkins/' + id + '?projection=log', 'Patch', UpdatecheckinData);
   }
 }

@@ -3,48 +3,88 @@
     <div class="panel-heading">Reports</div>
     <div class="panel-body">
         <div class="form-horizontal">
-          <form [formGroup]="updateTimeForm" (ngSubmit)="updateTime(updateTimeForm.value, updateTimeForm.valid)" class="form-horizontal">
+          <form [formGroup]="updateTimeForm" (ngSubmit)="bringParticipantTime(updateTimeForm.value, updateTimeForm.valid)" class="form-horizontal">
             <div class="form-group">
                 <label for="date-picker" class="col-sm-1 control-label">For date: </label>
-                <div class="col-sm-2">
-                    <app-datetimepicker id="date-picker" [classid]="classid" [dateFormat]="dataPickerFormat" (onDatePickerChange)="getParticipants($event)"></app-datetimepicker>
+                <div class="col-sm-3">
+                    <app-datetimepicker id="date-picker" [classid]="'date-picker'" [dateFormat]="dataPickerFormat" (onDatePickerChange)="getDatapickerDate($event)"></app-datetimepicker>
                 </div>
                 <div class="col-sm-1">
-                    <span *ngIf="!isParticipantNamesLoaded" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
+                    <span *ngIf="!isLoading" class="loading-status"><i class="fa fa-refresh fa-spin fa-2x fa-fw"></i></span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="participants-names" class="col-sm-1 control-label">Participant name: </label>
-                <div class="col-sm-2">
-                    <select formControlName="id" id="participants-names">
-                      <option value=''>Select participant name</option>
-                      <option *ngFor="let name of peopleDate" value="{{name.id}}">{{name.name}}</option>
+                <label for="participant" class="col-sm-1 control-label">Participant name: </label>
+                <div class="col-sm-3">
+                    <select formControlName="uid" id="participants-names" class="form-control" id="participant">
+                        <option value='' selected>Select participant name</option>
+                        <option *ngFor="let name of peopleDate" value="{{name.uid}}">{{name.name}}</option>
                     </select>
+                    <small *ngIf="updateTimeForm.controls.uid.invalid">Please choose participant!</small>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <input type="submit" [disabled]="!isParticipantNamesLoaded && !updateTimeForm.valid " class="btn btn-success" value="Update Participant time">
+                <div class="col-sm-offset-1 col-sm-3">
+                    <input type="submit" [disabled]="!isLoading" class="btn btn-success" value="Update Participant time">
                 </div>
             </div>
           </form>
         </div>
         <hr>
         <br>
-        <!-- <table *ngIf="false" class="table table-striped" *ngIf="isOverviewLoaded">
+        <table class="table table-striped">
             <thead>
                 <tr class="active">
-                    <th>Names</th>
-                    <th *ngFor="let day of overviewData.columns" [style.backgroundColor]=" !day.indexOf('w') ? '#cd302573' : '' ">{{day}}</th>
+                    <th>#</th>
+                    <th>Check In Status</th>
+                    <th>Duration</th>
+                    <th>Time</th>
+                    <th>Options</th>
                 </tr>
             </thead>
-            <tbody>
-
-                <tr *ngFor="let participent of overviewData.attendance">
-                    <td style="width: 100px;">{{participent.name}}</td>
-                    <td *ngFor="let period of participent.durations" [innerHtml]="period | textBold">
+            <tbody *ngIf="isLoading">
+                <tr *ngFor="let partInfo of participantTimes; let i = index">
+                    <td>{{i+1}}</td>
+                    <td [ngClass]="{'checkedIn': partInfo.checkedIn, 'checkedOut': !partInfo.checkedIn}">{{partInfo.checkedIn | checkattendence}}</td>
+                    <td>{{partInfo.duration | humanizetime}}</td>
+                    <td>{{partInfo.time | tolocaltime}}</td>
+                    <td>
+                        <button type="button" (click)="openModal(partInfo, i)" class="btn btn-success"  data-toggle="modal" data-target="#callModal">Update</button>
                     </td>
+                </tr>
             </tbody>
-        </table> -->
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="callModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-type">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Update participant time</h4>
+                </div>
+                <div class="modal-body modal-styling">
+                    <div class="form-group">
+                        <label for="newtime" class="col-sm-4 control-label">Pick new time:</label>
+                        <div class="col-sm-8">
+                            <app-datetimepicker id="newtime" [classid]="'new-date-picker'" [dateFormat]="newPickerFormat" (onDatePickerChange)="pickedNewDate($event)"></app-datetimepicker>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="auto">
+                            Automatically checked out:
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="" id="auto" [(ngModel)]="newUpdateForm.participantAuto">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" [disabled]="isUpdating" (click)="updateTime()" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -53,6 +53,11 @@ body
             }
         }
     }
+    .loading-status {
+        i {
+            vertical-align: middle;
+        }
+    }
     @include scrollStyle($width: 10px, $borderRadius: 5px, $background: rgba(35, 38, 78, 0.8), $inactive: rgba(35, 38, 78, 0.4));
 }
 html, body {

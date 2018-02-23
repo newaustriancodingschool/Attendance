@@ -18,7 +18,7 @@ export class DatetimepickerComponent implements OnInit, AfterViewInit, OnDestroy
     this.dp = $('#'+this.classid+'-datepicker').datetimepicker({
       format: this.dateFormat,
       viewMode: 'months',
-      defaultDate: window.moment(new Date()).format('YYYY-MM-DD')
+      defaultDate: window.moment(new Date()).format('YYYY-MM-DD HH:mm')
     });
     this.dp.on("dp.hide", (e)=>{
       this.onDatePickerChange.emit(e.date);
