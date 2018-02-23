@@ -29,7 +29,7 @@ export class CpComponent implements OnInit {
   ngOnInit() {
     this.config = [
       {isAdmin: true, routerLink: ",admin", fontawesome: 'fa fa-tachometer', caption: 'Control Panel'},
-      // {isAdmin: true, routerLink: ",admin,timesupdate", fontawesome: 'fa fa-time', caption: 'Time update'},
+      {isAdmin: true, routerLink: ",admin,timesupdate", fontawesome: 'fa fa-time', caption: 'Time update'},
       {isAdmin: true, routerLink: ",admin,overview", fontawesome: 'fa fa-calendar', caption: 'Overview'},
       {isAdmin: true, routerLink: ",admin,checkin", fontawesome: 'fa fa-check-square-o', caption: 'Check In'},
       {isAdmin: true, routerLink: ",admin,participants", fontawesome: 'fa fa-users', caption: 'Participants'},

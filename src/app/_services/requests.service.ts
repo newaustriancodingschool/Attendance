@@ -10,13 +10,16 @@ export class RequestsService {
   }
   // Admin http requests for deleting participant
   changeParticipantStatus(uid: string) {
-      return this.funs.makeRequest(`people/${uid}/toggle`, 'Post');
+      return this.funs.makeRequest(`people/${uid}/toggle`, 'Put');
   }
   getCheckin(checkinID=''){
     return this.funs.makeRequest('checkins/search/findByOrderByTimeDesc/'+checkinID+'?projection=log', 'Get');
   }
   updateStudentInfo(data){
     return this.funs.makeRequest('people/'+data.id, 'Put', data);
+  }
+  deleteParticipant(uid: string) {
+    return this.funs.makeRequest('people/' + uid + '/delete', 'Delete');
   }
   // client http requests
   getCheckerInfo() {

@@ -6,6 +6,9 @@ import { FunctionsService } from '../../../_services/_functions/functions.servic
 import { RequestsService } from '../../../_services/requests.service';
 import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
 
+// Interfaces
+import { ClientCheckin } from '../../../_interfaces/interfaces.interface';
+
 declare var $: any, window: any;
 @Component({
   selector: 'app-clientcheckin',
@@ -14,7 +17,7 @@ declare var $: any, window: any;
   providers: [ RequestsService ]
 })
 export class ClientcheckinComponent implements OnInit, OnDestroy {
-  isLoaded: boolean = false;
+  isLoaded: Boolean = false;
   checkerSummary: any;
   iteration: any;
   updateCounter: number = 10;
@@ -33,17 +36,17 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
         pageLength: 50,
         order: [ [1, 'desc'], [2, 'asc'] ],
         columns: [
-          { title: "#", data: "#" },
-          { title: "Status", data: "checkedIn" },
-          { title: "Last activity", data: "lastDuration" },
-          { title: "Name", data: "name" },
-          { title: "Attendance per week", data: "weekDuration" }
+          { title: '#', data: '#' },
+          { title: 'Status', data: 'checkedIn' },
+          { title: 'Last activity', data: 'lastDuration' },
+          { title: 'Name', data: 'name' },
+          { title: 'Attendance per week', data: 'weekDuration' }
         ],
         columnDefs: [
           {
             className: 'checkerStatus',
             render: (data, type) => {
-                      if (type === 'display' || type === 'filter'){
+                      if (type === 'display' || type === 'filter') {
                         return (data) ? `<div class="active"
                         style="width: 18px;
                         height: 18px;
@@ -96,12 +99,16 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
 
     });
     this.checkerStatus();
-    // this.startCounting();
+    this.startCounting();
+  }
+  ngOnDestroy() {
+    clearInterval(this.iteration);
+    this.table.destroy();
   }
   checkerStatus() {
     this.req.getCheckerInfo().subscribe(
       res => {
-        const respond = res.json();
+        const respond: Array<ClientCheckin> = res.json();
         this.DrawTable(respond);
       },
       err => {
@@ -110,13 +117,13 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
             type: 'danger',
             icon: 'fa fa-exclamation-triangle',
             title: 'Errer',
-            message: "Somthing went wrong!"
+            message: 'Somthing went wrong!'
         });
       });
   }
-  DrawTable(arrObjects: Array<any>) {
-    // let newArray = [];
+  DrawTable(arrObjects: Array<ClientCheckin>) {
     let index = 0;
+    // tslint:disable-next-line:prefer-const
     for (let id in arrObjects) {
       if (arrObjects[id]['lastDuration']) {
         arrObjects[id]['lastDuration'] = window.moment.duration( arrObjects[id]['lastDuration'] ).asMilliseconds();
@@ -126,29 +133,16 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
     this.table.clear().draw();
     this.table.rows.add(arrObjects); // Add new data
     this.table.columns.adjust().draw(); // Redraw the DataTable
-
-    // $('#participant-check-in').DataTable({
-    //   data: arrObjects,
-    //   columns: [
-    //     {title: "Status", data: "checkedIn"},
-    //     {title: "Duration", data: "lastDuration"},
-    //     {title: "Name", data: "name"}
-    //   ]
-    // });
   }
   startCounting() {
     this.iteration = setInterval( () => {
-      if (this.updateCounter === 0){
+      if (this.updateCounter === 0) {
         this.updateCounter = 10;
         this.checkerStatus();
-      }else{
+      } else {
         this.updateCounter--;
       }
     }, 1000);
-  }
-  ngOnDestroy() {
-    clearInterval(this.iteration);
-    this.table.destroy();
   }
 
 }

@@ -21,11 +21,14 @@
                     <th>{{person.slackHandle}}</th>
                     <th>{{person.uid}}</th>
                     <th>
-                        <button [disabled]="!fieldsAreReady" (click)="updatePersonInfo(person, i)" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#updateUSerInfo">
+                        <button [disabled]="!fieldsAreReady" (click)="updatePersonInfo(person, i)" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#callModal">
                                 Update
                         </button>
                         <button [disabled]="!fieldsAreReady" (click)="changePersonStatus(person, i)" type="button" class="{{person.disabled ? 'btn btn-info btn-lg' : 'btn btn-danger btn-lg' }}">
                             {{person.disabled ? 'Enable': 'Disable'}}
+                        </button>
+                        <button [disabled]="!fieldsAreReady" (click)="showConfirmDeleteMSG(person, i)" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#callModal">
+                            Delete
                         </button>
                     </th>
                 </tr>
@@ -36,65 +39,80 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="updateUSerInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="callModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form [formGroup]="updatePersonData" (ngSubmit)="sendNewPersonInfo(updatePersonData.value, updatePersonData.valid)" class="form-horizontal">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
+            <div class="modal-type" *ngIf="modalType == 'updateUserInfo'">
+                <form [formGroup]="updatePersonData" (ngSubmit)="sendNewPersonInfo(updatePersonData.value, updatePersonData.valid)" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Update Participant info</h4>
+                    </div>
 
-                <div class="modal-body" *ngIf="fieldsAreReady">
-                    <div class="form-group" *ngFor="let item of formArray">
-                        <div *ngIf="item.key != 'id'">
-                            <label for="name" class="col-sm-2 control-label; let i = index">{{item.key}}</label>
-                            <div class="col-sm-10">
-                                <input [formControlName]="item.key" type="text" class="form-control" [id]="item.key" [placeholder]="item.key">
-                                <small [hidden]="updatePersonData.controls[item.key].valid">{{item.key}} required!</small>
+                    <div class="modal-body" *ngIf="fieldsAreReady">
+                        <div class="form-group" *ngFor="let item of formArray">
+                            <div *ngIf="item.key != 'id'">
+                                <label for="name" class="col-sm-2 control-label; let i = index">{{item.key}}</label>
+                                <div class="col-sm-10">
+                                    <input [formControlName]="item.key" type="text" class="form-control" [id]="item.key" [placeholder]="item.key">
+                                    <small [hidden]="updatePersonData.controls[item.key].valid">{{item.key}} required!</small>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <!-- <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input formControlName="name" type="email" class="form-control" id="name" placeholder="Name">
+                            <small [hidden]="updatePersonData.controls.name.valid">Name required!</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input formControlName="email" type="email" class="form-control" id="Email" placeholder="Email">
+                            <small [hidden]="updatePersonData.controls.email.valid">Email required!</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slackHandle" class="col-sm-2 control-label">Slack handle</label>
+                        <div class="col-sm-10">
+                            <input formControlName="slackHandle" type="text" class="form-control" id="slackHandle" placeholder="Slack handle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="uid" class="col-sm-2 control-label">User card ID</label>
+                        <div class="col-sm-10">
+                            <input formControlName="uid" type="text" class="form-control" id="uid" placeholder="user card ID">
+                            <small [hidden]="updatePersonData.controls.uid.valid">User card ID required!</small>
+                        </div>
+                    </div>
+                    <div id="addItem">
+
+                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-type" *ngIf="modalType == 'deleteUserInfo'">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Participant info</h4>
                 </div>
-
-
-                <!-- <div class="modal-body">
-                  <div class="form-group">
-                      <label for="name" class="col-sm-2 control-label">Name</label>
-                      <div class="col-sm-10">
-                          <input formControlName="name" type="email" class="form-control" id="name" placeholder="Name">
-                          <small [hidden]="updatePersonData.controls.name.valid">Name required!</small>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="Email" class="col-sm-2 control-label">Email</label>
-                      <div class="col-sm-10">
-                          <input formControlName="email" type="email" class="form-control" id="Email" placeholder="Email">
-                          <small [hidden]="updatePersonData.controls.email.valid">Email required!</small>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="slackHandle" class="col-sm-2 control-label">Slack handle</label>
-                      <div class="col-sm-10">
-                          <input formControlName="slackHandle" type="text" class="form-control" id="slackHandle" placeholder="Slack handle">
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="uid" class="col-sm-2 control-label">User card ID</label>
-                      <div class="col-sm-10">
-                          <input formControlName="uid" type="text" class="form-control" id="uid" placeholder="user card ID">
-                          <small [hidden]="updatePersonData.controls.uid.valid">User card ID required!</small>
-                      </div>
-                  </div>
-                  <div id="addItem">
-
-                  </div>
-              </div> -->
+                <div class="modal-body" *ngIf="fieldsAreReady">
+                    <h5>Are you sure that you want to delete "{{participantInfo.name}}" and all it's checking times??</h5>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" (click)="DeletePersonInfo()" class="btn btn-danger">Confirm</button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

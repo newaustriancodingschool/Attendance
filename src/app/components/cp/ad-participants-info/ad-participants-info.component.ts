@@ -8,6 +8,9 @@ import { RequestsService } from '../../../_services/requests.service';
 import { FormsService , ValidatorsService } from '../../../_services/_functions/forms';
 import { GlobalDataService } from '../../../_services/globaldata.service';
 
+// Interface model
+import { Participant } from '../../../_interfaces/interfaces.interface';
+
 declare var $: any, window: any;
 @Component({
   selector: 'app-ad-participants-info',
@@ -16,15 +19,20 @@ declare var $: any, window: any;
   providers: [ RequestsService, FormsService]
 })
 export class AdParticipantsInfoComponent implements OnInit {
-
+    
+    // Type of modal
+    modalType: string;
   peopleReportLoaded:boolean = false;
-  peopleDate:any;
+  peopleDate: Array<Participant>;
 
   updatePersonData: FormGroup;
   updateRowID: number;
   fieldsAreReady: boolean = false
   formArray: Array<any>;
   isDisable: boolean = true;
+
+    //   Related to delete section
+    participantInfo: any;
   constructor(
     private AR: ActivatedRoute,
     private fs: FormsService,
@@ -61,7 +69,7 @@ export class AdParticipantsInfoComponent implements OnInit {
     });
   }
 
-  changePersonStatus(participantData, index) {
+  changePersonStatus(participantData: Participant, index: number) {
     this.req.changeParticipantStatus(participantData.uid).subscribe(
         res => {
             this.funs.showSuccessNote('Participant status changed successfully!');
@@ -72,34 +80,48 @@ export class AdParticipantsInfoComponent implements OnInit {
         }
     );
   }
-  updatePersonInfo(data, index) {
-      $('#myModalLabel').text('Update user info');
+  updatePersonInfo(participantData: Participant, index: number) {
+      this.modalType = 'updateUserInfo';
       this.updateRowID = index;
       this.updatePersonData = this.fs.update(this.updatePersonData, [
-            {"key":"id", "defaultValue":data.id},    
-            {"key":"name", "defaultValue":data.name},
-            {"key":"email", "defaultValue":data.email},
-            {"key":"slackHandle", "defaultValue":data.slackHandle},
-            {"key":"uid", "defaultValue":data.uid}
+            { key: 'id' , defaultValue: participantData.id},
+            { key: 'name' , defaultValue: participantData.name},
+            { key: 'email', defaultValue: participantData.email},
+            { key: 'slackHandle', defaultValue: participantData.slackHandle},
+            { key: 'uid', defaultValue: participantData.uid}
         ]);
   }
-  sendNewPersonInfo(values, isValid) {
+  sendNewPersonInfo(values: Participant, isValid) {
       if (isValid) {
         $('#updateUSerInfo').modal('hide');
         this.req.updateStudentInfo(values).subscribe(
-            (res) => {
+            res => {
                 let newPersonData = res.json();
                 this.peopleDate[this.updateRowID] = newPersonData;
+                $('#callModal').modal('hide');
             },
-            (err) => {
-                this.funs.notify({
-                    type: 'danger',
-                    icon: 'fa fa-exclamation-triangle',
-                    title: 'Errer',
-                    message: err.json().message
-                });
+            err => {
+                this.funs.showErrorNote(err.json());
         });
       }
+  }
+
+//   Related to delete section
+  showConfirmDeleteMSG(participantData: Participant, index: number) {
+    this.modalType = 'deleteUserInfo';
+    this.participantInfo = participantData;
+    this.participantInfo['index'] = index;
+  }
+  DeletePersonInfo() {
+    this.req.deleteParticipant(this.participantInfo.uid).subscribe(
+        res => {
+            this.funs.showSuccessNote('Participant has been deleted successfully!');
+            this.peopleDate.splice(this.participantInfo.index, 1);
+            $('#callModal').modal('hide');
+        },
+        err => {
+            this.funs.showErrorNote(err.json());
+        });
   }
 
 }

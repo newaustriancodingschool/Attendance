@@ -14,6 +14,8 @@ import { CheckattendencePipe } from '../../../_services/checkattendence.pipe';
 import { HumanizetimePipe } from '../../../_services/humanizetime.pipe';
 // import "rxjs/Rx";
 
+import { Admincheckin } from '../../../_interfaces/admincheckin.interface';
+
 declare var $: any;
 @Component({
   selector: 'app-ad-checkin-info',
@@ -23,7 +25,7 @@ declare var $: any;
 })
 export class AdCheckinInfoComponent implements OnInit {
   checkInReportLoaded:boolean = false;
-  checkinsData:any;
+  checkinsData: Array<Admincheckin>;
 
   checkinDate:any;
   fieldsAreReady: boolean = false
@@ -34,7 +36,7 @@ export class AdCheckinInfoComponent implements OnInit {
     private funs: FunctionsService,
     private ar: ActivatedRoute,
     private router: Router,
-    private req:RequestsService ) { }
+    private req: RequestsService ) { }
   
   ngOnInit() {
     this.funs.pageTitle( this.AR ); // Change page tab title

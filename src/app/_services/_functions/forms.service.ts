@@ -35,15 +35,18 @@ export class FormsService {
     }
     return object;
   }
-  update(object, updatedForm:any=null){
+  update(object, updatedForm:any = null){
     if(typeof object != 'object'){
       throw new Error('Invalid object. form can\'t be update');
     }
-    if(typeof updatedForm != null){
-      for(let field in updatedForm){
-        if(!object.controls.hasOwnProperty(field) || updatedForm[field] == null ) continue;
-        object.controls[field].patchValue(updatedForm[field]);
+    let reformObject = {};
+    if(typeof updatedForm != null) {
+      for(let field in updatedForm) {
+        if(!object.controls.hasOwnProperty(updatedForm[field].key) || updatedForm[field] == null ) continue;
+        let key = updatedForm[field].key;
+        reformObject[key] = updatedForm[field].defaultValue;
       }
+      object.patchValue(reformObject);
     }
     return object;
   }

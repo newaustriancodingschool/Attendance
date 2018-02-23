@@ -28,11 +28,14 @@
                 </tr>
             </thead>
             <tbody>
-
                 <tr *ngFor="let participent of overviewData.attendance">
                     <td style="width: 100px;">{{participent.name}}</td>
-                    <td *ngFor="let period of participent.durations" [innerHtml]="period | textBold">
-                    </td>
+                    <td *ngFor="let period of participent.durations" [innerHtml]="period | textBold :l"></td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;">Ava. logout time</td>    
+                    <td *ngFor="let avrCheckoutTimes of overviewData.avgCheckOutTimes" [innerHtml]="avrCheckoutTimes | textBold"></td>
+                </tr>
             </tbody>
         </table>
     </div>
