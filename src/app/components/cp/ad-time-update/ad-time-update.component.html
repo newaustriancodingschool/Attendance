@@ -49,7 +49,7 @@
                     <td>{{partInfo.duration | humanizetime}}</td>
                     <td>{{partInfo.time | tolocaltime}}</td>
                     <td>
-                        <button type="button" (click)="openModal(partInfo, i)" class="btn btn-success"  data-toggle="modal" data-target="#callModal">Update</button>
+                        <button type="button" (click)="openModal(partInfo, i)" class="btn btn-success">Update</button>
                     </td>
                 </tr>
             </tbody>
@@ -69,8 +69,8 @@
                 <div class="modal-body modal-styling">
                     <div class="form-group">
                         <label for="newtime" class="col-sm-4 control-label">Pick new time:</label>
-                        <div class="col-sm-8">
-                            <app-datetimepicker id="newtime" [classid]="'new-date-picker'" [dateFormat]="newPickerFormat" (onDatePickerChange)="pickedNewDate($event)"></app-datetimepicker>
+                        <div class="col-sm-8" *ngIf="showModal">
+                            <app-datetimepicker id="newtime" [startDate]="newUpdateForm.newPickeTime" [classid]="'new-date-picker'" [dateFormat]="newPickerFormat" (onDatePickerChange)="pickedNewDate($event)"></app-datetimepicker>
                         </div>
                     </div>
                     <div class="form-check">

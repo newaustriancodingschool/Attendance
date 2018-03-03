@@ -13,18 +13,18 @@ export class AuthService {
   constructor(private funs: FunctionsService, private router: Router) {
   }
 
-  cash(key:string, data:any, isPermanent:boolean = false){
-    if(isPermanent){
+  cash(key: string, data: any, isPermanent: boolean = false){
+    if (isPermanent) {
       window.localStorage.setItem( key , data );
-    }else{
+    } else {
       window.sessionStorage.setItem( key , data );
     }
   }
-  clearCash(){
+  clearCash() {
     window.localStorage.clear();
     window.sessionStorage.clear();
   }
-  getCashedOf(key:string): any{
+  getCashedOf(key:string): any {
     return window.localStorage.getItem(key) || window.sessionStorage.getItem(key);
     // try{
     //   data = JSON.parse( data );
@@ -49,11 +49,11 @@ export class AuthService {
   //   }
   // }
 
-  login(data:any){
-    this.cash("token", btoa(data['username']+':'+data['password']), data.checkbox);
-    return this.funs.makeRequest("login", "Post");
+  login(data: any) {
+    this.cash('token', btoa(data['username'] + ':' + data['password']), data.checkbox);
+    return this.funs.makeRequest('login', 'Post', null, 'text');
   }
-  getLoginData(){
+  getLoginData() {
     return this.funs.makeRequest("api/1/me", "Get");
   }
 

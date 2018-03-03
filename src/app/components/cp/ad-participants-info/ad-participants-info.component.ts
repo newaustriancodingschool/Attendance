@@ -54,8 +54,9 @@ export class AdParticipantsInfoComponent implements OnInit {
     this.updatePersonData = this.fs.group(this.formArray);
     this.fieldsAreReady = true;
 
-    this.req.getPeople().subscribe(res => {
-        this.peopleDate = res.json()._embedded.people;
+    this.req.getPeople().subscribe(
+    (res: any) => {
+        this.peopleDate = res._embedded.people;
         this.gs.pushDate('peopleData', this.peopleDate);
         this.peopleReportLoaded = true;
     },
@@ -64,19 +65,19 @@ export class AdParticipantsInfoComponent implements OnInit {
             type: 'danger',
             icon: 'fa fa-exclamation-triangle',
             title: 'Errer',
-            message: err.json()
+            message: err
         });
     });
   }
 
   changePersonStatus(participantData: Participant, index: number) {
     this.req.changeParticipantStatus(participantData.uid).subscribe(
-        res => {
+        (res: any) => {
             this.funs.showSuccessNote('Participant status changed successfully!');
-            this.peopleDate[index] = res.json();
+            this.peopleDate[index] = res;
         },
         err => {
-            this.funs.showErrorNote(err.json());
+            this.funs.showErrorNote(err);
         }
     );
   }
@@ -95,13 +96,13 @@ export class AdParticipantsInfoComponent implements OnInit {
       if (isValid) {
         $('#updateUSerInfo').modal('hide');
         this.req.updateStudentInfo(values).subscribe(
-            res => {
-                let newPersonData = res.json();
+            (res: any) => {
+                let newPersonData = res;
                 this.peopleDate[this.updateRowID] = newPersonData;
                 $('#callModal').modal('hide');
             },
             err => {
-                this.funs.showErrorNote(err.json());
+                this.funs.showErrorNote(err);
         });
       }
   }
@@ -120,7 +121,7 @@ export class AdParticipantsInfoComponent implements OnInit {
             $('#callModal').modal('hide');
         },
         err => {
-            this.funs.showErrorNote(err.json());
+            this.funs.showErrorNote(err);
         });
   }
 

@@ -39,7 +39,7 @@ export class CpComponent implements OnInit {
     this.navBar = $('.navbar .navigation .hamburger a');
     this.burgger = $('.navbar .navigation .fixed-menu');
     this.bg = $('.navbar .bg-brightness');
-    this.funs.makeRequest("login", "Post").subscribe(
+    this.funs.makeRequest("login", "Post", null, 'text').subscribe(
       res => {
         // Free play around
       },

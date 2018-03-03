@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Http, Headers, RequestOptions, RequestMethod, Request, URLSearchParams  } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+// import { Http, Headers, RequestOptions, RequestMethod, Request, URLSearchParams  } from '@angular/http';
 import { environment } from '../../../environments/environment';
-
-// Production environment
-// import { environment } from '../../../environments/environment.prod';
+import { catchError, retry } from 'rxjs/operators';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 declare var $: any , window: any;
 @Injectable()
@@ -13,7 +13,7 @@ export class FunctionsService {
 
   constructor(
     private title: Title,
-    private http: Http
+    private http: HttpClient
   ) {}
   
   notify(data){
@@ -92,34 +92,46 @@ export class FunctionsService {
   pageTitle(activeRoute: any) {
     this.title.setTitle( activeRoute.snapshot.data['title'] );
   }
-  makeRequest(page = null, type = null, data = null) {
+  makeRequest(page = null, type = null, data = null, resType: string = null) {
     // let params: URLSearchParams = new URLSearchParams();
     // params.set('json', data);
-    let header = new Headers(),opt;
-    var token = this.getToken();
-    if(token) header.append("Authorization", "Basic "+this.getToken());
-    
-    if (type == "Post" || type == "Put" || type == "Patch") {
-      header.append("Accept", "application/json");
-      header.append("Content-Type", "application/json");
-      opt = new RequestOptions({
-        headers: header,
-        url: this.url + page,
-        method: RequestMethod[type],
-        body: JSON.stringify(data)
-        // search: params
-      });
+    let headers = new HttpHeaders();
+    let requestOptions, token = this.getToken();
+    if (token) {
+      headers = headers.set('Authorization', 'Basic ' + token );
     }
-    if (type == "Get" || type == 'Delete') {
-      header.append("Accept", "application/json");
-      opt = new RequestOptions({
-        headers: header,
-        url: this.url + page,
-        method: RequestMethod[type]
-      });
+    headers = headers.set('Accept', 'application/json');
+    if (type === 'Post' || type === 'Put' || type === 'Patch') {
+      headers = headers.set('Content-Type', 'application/json');
+      requestOptions = {
+        headers: headers,
+        body: JSON.stringify(data),
+        responseType: !resType ? 'json' : 'text'
+      };
+    } else if (type === 'Get' || type === 'Delete') {
+      requestOptions = {
+        headers: headers,
+        responseType: !resType ? 'json' : 'text'
+      };
     }
-    return this.http.request(new Request(opt));
+    return this.http.request(type, this.url + page, requestOptions);
+    // return this.http.request(requestOptions ).pipe( retry(3), catchError(err));
   }
+  // private handleError(error: HttpErrorResponse) {
+  //     if (error.error instanceof ErrorEvent) {
+  //       // A client-side or network error occurred. Handle it accordingly.
+  //       console.error('An error occurred:', error.error.message);
+  //     } else {
+  //       // The backend returned an unsuccessful response code.
+  //       // The response body may contain clues as to what went wrong,
+  //       console.error(
+  //         `Backend returned code ${error.status}, ` +
+  //         `body was: ${error.error}`);
+  //     }
+  //     // return an ErrorObservable with a user-facing error message
+  //     return new ErrorObservable(
+  //       'Something bad happened; please try again later.');
+  // }
   getToken():any {
     let token = window.localStorage.getItem('token') || window.sessionStorage.getItem('token');
     if(typeof token == 'string'){

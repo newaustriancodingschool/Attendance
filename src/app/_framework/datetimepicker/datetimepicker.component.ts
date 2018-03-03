@@ -10,17 +10,19 @@ export class DatetimepickerComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() classid;
   @Output() onDatePickerChange = new EventEmitter<any>();
   @Input() dateFormat: string;
+  @Input() startDate: any = null;
   dp: any;
   constructor() { }
 
-  ngOnInit() {  }
-  ngAfterViewInit(){
-    this.dp = $('#'+this.classid+'-datepicker').datetimepicker({
+  ngOnInit() { }
+  ngAfterViewInit() {
+    this.startDate = this.startDate ? this.startDate : (new Date());
+    this.dp = $('#' + this.classid + '-datepicker').datetimepicker({
       format: this.dateFormat,
       viewMode: 'months',
-      defaultDate: window.moment(new Date()).format('YYYY-MM-DD HH:mm')
+      defaultDate: window.moment(this.startDate).format('YYYY-MM-DD HH:mm')
     });
-    this.dp.on("dp.hide", (e)=>{
+    this.dp.on("dp.hide", (e) => {
       this.onDatePickerChange.emit(e.date);
     });
   }

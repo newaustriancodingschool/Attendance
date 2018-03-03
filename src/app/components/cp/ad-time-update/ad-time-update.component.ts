@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 // Pipes
 import { TolocaltimePipe } from '../../../_services/tolocaltime.pipe';
@@ -20,7 +20,7 @@ declare var window: any, $: any;
   styleUrls: ['./ad-time-update.component.css'],
   providers: [ RequestsService, FormsService ]
 })
-export class AdTimeUpdateComponent implements OnInit {
+export class AdTimeUpdateComponent implements OnInit, OnDestroy {
   // Show data picker in a format of 'YYYY-MM';
   dataPickerFormat: string = 'YYYY-MM';
   // Participant model
@@ -44,6 +44,7 @@ export class AdTimeUpdateComponent implements OnInit {
     participantIndex: null
   };
   isUpdating: boolean = false;
+  showModal: boolean = false;
 
   constructor(private fs: FormsService, private req: RequestsService, private funs: FunctionsService) { }
 
@@ -53,13 +54,22 @@ export class AdTimeUpdateComponent implements OnInit {
       {key: 'date', defaultValue: this.currentDate, validators: [ValidatorsService.required()] }
     ]);
     this.req.getPeople('').subscribe(
-      res => {
+      (res: any) => {
           this.isLoading = true;
-          this.peopleDate = res.json()._embedded.people;
+          this.peopleDate = res._embedded.people;
       },
       err => {
-          this.funs.showErrorNote(err.json());
-      });
+          this.funs.showErrorNote(err);
+    });
+    $('#callModal').on('hide.bs.modal', (e) => {
+      this.showModal = false;
+    });
+  }
+
+  ngOnDestroy() {
+    $('#callModal').off('hide.bs.modal', (e) => {
+      this.showModal = false;
+    });
   }
 
   getDatapickerDate(e) {
@@ -71,12 +81,12 @@ export class AdTimeUpdateComponent implements OnInit {
     if (isValid) {
       this.isLoading = false;
       this.req.getParticipantTimes(data.uid, data.date).subscribe(
-        res => {
-            this.participantTimes = res.json();
+        (res: any) => {
+            this.participantTimes = res;
             this.isLoading = true;
         },
         err => {
-            this.funs.showErrorNote(err.json());
+            this.funs.showErrorNote(err);
         });
     }
   }
@@ -85,9 +95,13 @@ export class AdTimeUpdateComponent implements OnInit {
     this.newUpdateForm.newPickeTime = e.format();
   }
   openModal(participantInfo: AdminCheckin, index: number) {
+    this.newUpdateForm.newPickeTime = window.moment.utc(participantInfo.time).local().format();
+    console.log(participantInfo.time + ' -> ', this.newUpdateForm.newPickeTime);
     this.newUpdateForm.participantAuto = participantInfo.auto;
     this.newUpdateForm.participantId = participantInfo.id;
     this.newUpdateForm.participantIndex = index;
+    this.showModal = true;
+    $('#callModal').modal('show');
   }
   updateTime() {
     let payload = {
@@ -96,14 +110,14 @@ export class AdTimeUpdateComponent implements OnInit {
     };
     this.isUpdating = true;
     this.req.updateParticipantTime(this.newUpdateForm.participantId, payload). subscribe(
-      res => {
+      (res: any) => {
           this.isUpdating = false;
           this.funs.showSuccessNote('Participant check in time has been successfully updated!');
-          this.participantTimes[this.newUpdateForm.participantIndex] = res.json();
+          this.participantTimes[this.newUpdateForm.participantIndex] = res;
           $('#callModal').modal('hide');
       },
       err => {
-          this.funs.showErrorNote(err.json());
+          this.funs.showErrorNote(err);
       });
   }
 }

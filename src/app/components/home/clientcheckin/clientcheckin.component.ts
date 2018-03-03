@@ -110,10 +110,9 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
   checkerStatus() {
     this.isRefreshing = true;
     this.req.getCheckerInfo().subscribe(
-      res => {
+      (res) => {
         this.isRefreshing = false;
-        const respond: Array<ClientCheckin> = res.json();
-        this.DrawTable(respond);
+        this.DrawTable(res);
       },
       err => {
         this.router.navigate(['login']);
@@ -125,7 +124,7 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
         });
       });
   }
-  DrawTable(arrObjects: Array<ClientCheckin>) {
+  DrawTable(arrObjects) {
     // tslint:disable-next-line:prefer-const
     for (let id in arrObjects) {
       if (arrObjects[id]['lastDuration']) {
