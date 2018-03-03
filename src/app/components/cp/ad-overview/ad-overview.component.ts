@@ -41,7 +41,7 @@ export class AdOverviewComponent implements OnInit {
     this.isOverviewLoaded = false;
     this.req.getOverviewInfo(date).subscribe(
       res => {
-        this.overviewData = res.json();
+        this.overviewData = res;
         this.isOverviewLoaded = true;
       },
       err => {

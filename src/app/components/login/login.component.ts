@@ -37,29 +37,22 @@ export class LoginComponent implements OnInit {
     ]);
   }
 
-  loggin(data:any, isValid:boolean){
+  loggin(data:any, isValid: boolean){
     this.submitted = true;
-    if(isValid){
+    if (isValid) {
       this.loading = true;
       this.auth.login(data).subscribe(
-        (res)=>{
-          this.funs.notify({type: 'success', 
-            icon: 'fa fa-flag',
-            title: 'Login Status',
-            message: "Welcome, <i>Admin, you have successfuly loggedin</i>"});
+        (res) => {
+          this.funs.showSuccessNote('Welcome, <i>Admin, you have successfuly loggedin</i>');
           this.loading = false;
-          // this.gds.pushDate("userLogin", res.json());
-          this.funs.delay(()=>{
+          this.funs.delay( () => {
             this.router.navigate(['', 'admin']);
           }, 2500);
         },
-        (err)=>{
-          window.localStorage.clear();
-          window.sessionStorage.clear();
-          this.funs.notify({type: 'danger', 
-            icon: 'fa fa-exclamation-triangle',
-            title: 'Login Status',
-            message: "Invalid username and password. Please try again"});
+        (err) => {
+            window.localStorage.clear();
+            window.sessionStorage.clear();
+            this.funs.showErrorNote('Invalid username and password. Please try again');
             this.loading = false;
           });
     }

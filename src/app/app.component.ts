@@ -11,8 +11,8 @@ import { AuthService } from './_services/auth.service';
 export class AppComponent {
   title = 'app';
   constructor(private auth: AuthService) {
-    window.addEventListener("beforeunload", (e) => {
-      this.auth.clearCash();
-    });
+    // window.addEventListener("beforeunload", (e) => {
+    //   this.auth.clearCash();
+    // });
   }
 }

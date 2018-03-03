@@ -1,6 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule, JsonpModule } from '@angular/http';
+
+import { HttpClientModule } from '@angular/common/http';
+// Custom HTTP module
+// import { HttpCustomModule } from './_services/http/http_custom.module';
+// Old version and deprecated
+// import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_ROUTES_PROVIDER } from './app.routes';
 import { AppComponent } from './app.component';
@@ -57,8 +62,7 @@ import { AdTimeUpdateComponent } from './components/cp/ad-time-update/ad-time-up
     ReactiveFormsModule,
     BrowserModule,
     FormsModule,
-    HttpModule,
-    JsonpModule
+    HttpClientModule
   ],
   providers: [ GlobalDataService, FunctionsService ],
   bootstrap: [AppComponent]
