@@ -79,10 +79,6 @@ MIT
 MIT
 MIT
 
-@angular/http@4.4.6
-MIT
-MIT
-
 @angular/forms@4.4.6
 MIT
 MIT
