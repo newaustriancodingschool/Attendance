@@ -1,11 +1,11 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
-    <div class="panel-heading">Reports</div>
+    <div class="panel-heading">Time update</div>
     <div class="panel-body">
         <div class="form-horizontal">
           <form [formGroup]="updateTimeForm" (ngSubmit)="bringParticipantTime(updateTimeForm.value, updateTimeForm.valid)" class="form-horizontal">
             <div class="form-group">
-                <label for="date-picker" class="col-sm-1 control-label">For date: </label>
+                <label for="date-picker" class="col-sm-1 control-label">For month: </label>
                 <div class="col-sm-3">
                     <app-datetimepicker id="date-picker" [classid]="'date-picker'" [dateFormat]="dataPickerFormat" (onDatePickerChange)="getDatapickerDate($event)"></app-datetimepicker>
                 </div>
@@ -20,12 +20,12 @@
                         <option value='' selected>Select participant name</option>
                         <option *ngFor="let name of peopleDate" value="{{name.uid}}">{{name.name}}</option>
                     </select>
-                    <small *ngIf="updateTimeForm.controls.uid.invalid">Please choose participant!</small>
+                    <small *ngIf="updateTimeForm.controls.uid.invalid">Please choose participant, then click 'Select'!</small>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-3">
-                    <input type="submit" [disabled]="!isLoading" class="btn btn-success" value="Update Participant time">
+                    <input type="submit" [disabled]="!isLoading" class="btn btn-success" value="Select">
                 </div>
             </div>
           </form>
