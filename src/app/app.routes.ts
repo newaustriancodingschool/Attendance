@@ -23,7 +23,7 @@ const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent, children: [
     {path: '', component: ClientcheckinComponent, data: { title: myTitle + 'Home'} }
   ]},
-  {path: 'login', component: LoginComponent, data: { title: myTitle + 'Loggin'} },
+  {path: 'login', component: LoginComponent, data: { title: myTitle + 'Log in'} },
   {path: 'admin', component: CpComponent, children: [
     {path: '', component: AdhomeComponent, data: { title: myTitle + 'Admin'}},
     {path: 'overview', component: AdOverviewComponent, data: { title: myTitle + 'Overview'} },

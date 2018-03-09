@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.auth.login(data).subscribe(
         (res) => {
-          this.funs.showSuccessNote('Welcome, <i>Admin, you have successfuly loggedin</i>');
+          this.funs.showSuccessNote('Welcome, <i>Admin, you have successfully logged in!</i>');
           this.loading = false;
           this.funs.delay( () => {
             this.router.navigate(['', 'admin']);

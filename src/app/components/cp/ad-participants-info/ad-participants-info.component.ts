@@ -19,7 +19,7 @@ declare var $: any, window: any;
   providers: [ RequestsService, FormsService]
 })
 export class AdParticipantsInfoComponent implements OnInit {
-    
+
     // Type of modal
     modalType: string;
   peopleReportLoaded:boolean = false;
@@ -64,7 +64,7 @@ export class AdParticipantsInfoComponent implements OnInit {
         this.funs.notify({
             type: 'danger',
             icon: 'fa fa-exclamation-triangle',
-            title: 'Errer',
+            title: 'Error',
             message: err
         });
     });

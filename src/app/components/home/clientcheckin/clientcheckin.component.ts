@@ -119,8 +119,8 @@ export class ClientcheckinComponent implements OnInit, OnDestroy {
         this.funs.notify({
             type: 'danger',
             icon: 'fa fa-exclamation-triangle',
-            title: 'Errer',
-            message: 'Somthing went wrong!'
+            title: 'Error',
+            message: 'Something went wrong!'
         });
       });
   }

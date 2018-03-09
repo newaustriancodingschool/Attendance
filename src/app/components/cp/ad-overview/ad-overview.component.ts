@@ -19,7 +19,7 @@ declare var $: any, window: any;
   providers: [ RequestsService ]
 })
 export class AdOverviewComponent implements OnInit {
-  
+
   isOverviewLoaded: boolean = false;
   currentMonth: string = window.moment(new Date()).format('YYYY-MM');
   overviewData: any;
@@ -48,7 +48,7 @@ export class AdOverviewComponent implements OnInit {
         this.funs.notify({
             type: 'danger',
             icon: 'fa fa-exclamation-triangle',
-            title: 'Errer',
+            title: 'Error',
             message: err.json()
         });
     });
@@ -65,7 +65,7 @@ export class AdOverviewComponent implements OnInit {
       format: 'a3'}
     );
     const columns = [], rows = [];
-    let rowObj, 
+    let rowObj,
     colLen = this.overviewData.columns.length;
     columns.push( {title: "ID", dataKey: "id"} );
     columns.push( {title: "Names", dataKey: "names"} );
@@ -73,7 +73,7 @@ export class AdOverviewComponent implements OnInit {
     this.overviewData.columns.forEach( (element, i) => {
       columns.push( {title: element, dataKey: element} );
     });
-    
+
     this.overviewData.attendance.forEach( (col, index) => {
       rowObj = {};
       rowObj['id'] = index + 1;
@@ -97,7 +97,7 @@ export class AdOverviewComponent implements OnInit {
         margin: {top: 40},
         addPageContent: (data) => {
           pdf.text(
-            "Attendence report for: " + this.overviewData.yearMonth,
+            "Attendance report for: " + this.overviewData.yearMonth,
             data.settings.margin.left + 27, 22);
           pdf.text(
             "Note: Default paper is A3 because of big table",
