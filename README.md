@@ -1,53 +1,44 @@
 # Attendance
-Check system for participent attendence.
 
-## HOW TO INSTALL
+Frontend for viewing and administrating the participant attendances.
 
-If you want to install development mode then follow the following steps:
+### Setup
 
-### --> Product environment (Easy Way) (You can't edite system files)
-OR use the simple way by running the the products file
+* Install nodejs on your machine
 
-* You have to install nodejs in your machine
-* get a clone of the repo. by using
+* Clone the repository
+
 ```
 git clone https://github.com/RefugeesCodeAT/Attendance.git
-```
-* Get inside Attendace/dist folder
-```
-cd attendance/dist
-```
-* Now you can run the system by the following code but you have to be sure that you are inside the right folder (previous steps)
-```
-node index.js
-```
-
-### --> Development environment (Hard Way) (You can edite system files)
-* You have to install nodejs in your machine
-* get a clone of the repo. by using
-```
-git clone https://github.com/RefugeesCodeAT/Attendance.git
-```
-* Get inside Attendace folder
-```
 cd attendance
 ```
+
 * Install all packages
+
 ```
 npm install
 ```
-* Finally run the system as development environment
+
+* Run (using `angular-cli`)
+
 ```
 ng serve
 ```
 
-NOTE: You both way you will get the following link to run the system in your browser `http://localhost:4200/`. unless you change the port.
-IMPORTANT: You have to go to the following link to run the system `http://localhost:PORT/admin`.
+* Open in your browser at `http://localhost:4200/`
 
-## SOME DEVELOPMENT INFO
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+## Deploy
+
+To build the bundle and deploy it on Github Pages (using `angular-cli-ghpages`), run:
+
+```
+npm run build-prod
+npm deploy
+```
 
 ## Running unit tests
 
